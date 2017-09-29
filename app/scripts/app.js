@@ -18,7 +18,7 @@ angular
        // Allow same origin resource loads.
        'self',
        // Allow wordpress uploads.
-       'http://www.memory.lossur.es/wp/wp-content/uploads/**',
+       'https://worldrecordsjournal.org/wp/wp-content/uploads/**',
 
        'player.vimeo.com/video/**',
        'http://cf.lossur.es/**',

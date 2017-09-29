@@ -6,7 +6,7 @@ var proxy = require('proxy-middleware');
 // Use proxy-middleware instead of http-proxy because http-proxy was causing
 // an issue with the dreamhost server and I couldn't figure it out :/
 // Probably something with specific headers. proxy-middleware just works though.
-var proxyOptions = url.parse('http://www.memory.lossur.es/wp/');
+var proxyOptions = url.parse('https://worldrecordsjournal.org/wp/');
 proxyOptions.route = '/wp';
 
 var directory = 'dist';
@@ -32,7 +32,7 @@ var directory = 'dist';
     // in the proxy.
     delete req.headers['host'];
     apiProxy.web(req, res, {
-      target: 'http://www.memory.lossur.es/'
+      target: 'https://worldrecordsjournal.org/'
     });
   });
 
