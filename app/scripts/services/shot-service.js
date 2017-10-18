@@ -17,7 +17,7 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
    * @return {string}
    */
   this.getVideoUrl = function() {
-    var url = 'http://cf.lossur.es/' +
+    var url = 'https://s3.amazonaws.com/world-records-journal/' +
         $filter('shot')(this.current) + '.mp4';
     return url;
   };

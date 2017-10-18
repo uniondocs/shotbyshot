@@ -6,7 +6,7 @@ var proxy = require('proxy-middleware');
 // Use proxy-middleware instead of http-proxy because http-proxy was causing
 // an issue with the dreamhost server and I couldn't figure it out :/
 // Probably something with specific headers. proxy-middleware just works though.
-var proxyOptions = url.parse('https://worldrecordsjournal.org/wp/');
+var proxyOptions = url.parse('https://worldrecordsjournal.org/');
 proxyOptions.route = '/wp';
 
 var directory = 'dist';
@@ -21,6 +21,7 @@ var directory = 'dist';
   var cache = {};
 
   app.get('/wp/*', function(req, res){
+    req.url = req.url.replace('/wp', '');
     // Try to return cached JSON.
     if (cache[req.url] && cache[req.url].body) {
       console.log('CACHED RESPONSE: ' + req.url);
