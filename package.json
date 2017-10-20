@@ -16,7 +16,7 @@
     "gulp-csso": "^0.2.6",
     "gulp-filter": "^0.4.1",
     "gulp-flatten": "^0.0.2",
-    "gulp-imagemin": "^0.6",
+    "gulp-imagemin": "3.4.0",
     "gulp-jshint": "^1.8",
     "gulp-load-plugins": "^0.5",
     "gulp-ruby-sass": "^0.4.3",

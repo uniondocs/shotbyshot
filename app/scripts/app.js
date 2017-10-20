@@ -20,6 +20,7 @@ angular
        // Allow wordpress uploads.
        'https://worldrecordsjournal.org/wp/wp-content/uploads/**',
        'https://s3.amazonaws.com/world-records-journal/**',
+       'https://s3.amazonaws.com/world-records-journal/',
 
        'player.vimeo.com/video/**',
        'http://cf.lossur.es/**',
