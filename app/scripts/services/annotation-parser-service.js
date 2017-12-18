@@ -85,6 +85,7 @@ function AnnotationParserService($sce, $rootScope, Annotation) {
 
         var ALLOWED_TYPES = {
           'text': 1,
+          'column': 1,
           'background': 1,
           'photo': 1,
           'highlight': 1,

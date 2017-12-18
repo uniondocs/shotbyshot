@@ -30,6 +30,11 @@
     <div class="slide-text-container" ng-bind-html="slide.content"></div>
   </div>
 
+  <!-- COLUMN -->
+  <div ng-if="slide.type === 'column'" class="slide-column slide-inner">
+    <div class="slide-column-container" ng-bind-html="slide.content"></div>
+  </div>
+
   <!-- BACKGROUND -->
   <div ng-if="slide.type === 'background'" class="slide-background slide-inner">
     <img ng-if="slide.attributes.background" ng-src="{{ slide.attributes.background }}" class="background-cover-directive" />

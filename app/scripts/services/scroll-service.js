@@ -299,6 +299,7 @@ function ScrollService(ShotVideoService) {
       },
     },
     'text': KeyFrameSets.fadeInFromBottom,
+    'column': KeyFrameSets.fadeInFromBottom,
     'highlight': KeyFrameSets.highlightStart,
     'photo': KeyFrameSets.slideInFromBottom,
     'streetview': KeyFrameSets.slideInFromBottom,
