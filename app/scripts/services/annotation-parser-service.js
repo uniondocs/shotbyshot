@@ -172,10 +172,7 @@ function AnnotationParserService($sce, $rootScope, Annotation) {
           streetview: 'Then & Now'
         };
 
-        if (NON_AUTHOR_TYPES[type]) {
-          slideObject.nav = type === 'video' && attributeMap.title ?
-              attributeMap.title : NON_AUTHOR_TYPES[type];
-        }
+        slideObject.nav = attributeMap.title || NON_AUTHOR_TYPES[type];
 
         if (type === 'video') {
           // Add callbacks that broadcast video events on enter and exit,
