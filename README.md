@@ -20,7 +20,7 @@
 
 4. [Sass](http://sass-lang.com/install)
 
-# Installation
+# Installation and Development
 
 #### Clone this repo and then run the following commands from the top level directory:
 
@@ -61,6 +61,17 @@
     ```sh
     $ gulp serve:4RealDist
     ```
+
+# Deploying
+
+1. Compile files to dist/
+
+  ```sh
+  $ gulp
+  ```
+
+2. Commit new /dist files to repo and push.
+
 
 # Installation Mode
 
