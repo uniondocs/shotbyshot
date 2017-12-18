@@ -18,6 +18,8 @@
     $ npm install -g bower
     ```
 
+4. [Sass](http://sass-lang.com/install)
+
 # Installation
 
 #### Clone this repo and then run the following commands from the top level directory:
