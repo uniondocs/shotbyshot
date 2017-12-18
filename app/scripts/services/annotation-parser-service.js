@@ -172,15 +172,6 @@ function AnnotationParserService($sce, $rootScope, Annotation) {
           streetview: 'Then & Now'
         };
 
-        // If first detected slide is not one of the non-author ones, add an
-        // author slide.
-        if (i === 0 && !NON_AUTHOR_TYPES[type]) {
-          slideObjects.push({
-            type: 'author',
-            annotation: annotation
-          });
-        }
-
         if (NON_AUTHOR_TYPES[type]) {
           slideObject.nav = type === 'video' && attributeMap.title ?
               attributeMap.title : NON_AUTHOR_TYPES[type];
