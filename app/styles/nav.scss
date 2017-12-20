@@ -5,25 +5,27 @@
   top: 0px;
   left: 0px;
   right: 0px;
-  height: $nav-height;
+  bottom:0;
+  height:80px;
   color: #FFF;
   z-index: 5;
-  transition: opacity 0.3s ease-in-out;
+  transition: height 0.1s 0.1s, opacity 0.3s ease-in-out;
+  font-family:'Arial',sans-serif;
 
   .nav-menu, .nav-global {
-    height: 0;
     opacity: 0;
-    background: rgba(0, 0, 0, 0.4);
     overflow: hidden;
-    transition: opacity 0.3s ease-in-out, height 0s 0.3s;
+	transition: height 0.1s 0.1s, opacity 0.3s ease-in-out;
   }
 
   .nav-menu {
     position: absolute;
     left: 0px;
     right: 0px;
-    top: $nav-height;
+    top:0;
     bottom: 0px;
+    background:rgba(204,204,204,0.5);
+    pointer-events:none;
   }
 
   .top-nav-current-slide, .top-nav-shot {
@@ -34,7 +36,7 @@
     height: 100%;
 
     .nav-menu {
-      height: auto;
+      height: 100%;
       opacity: 1;
       transition: opacity 0.3s ease-in-out;
     }
@@ -52,35 +54,37 @@
   }
 
   &.global {
-    height: 100%;
-
+	height:100%;
+	  
     .nav-global {
       height: 100%;
       opacity: 1;
       transition: opacity 0.3s ease-in-out;
+      z-index:100;
+      position:relative;
     }
 
     .top-nav-menu-button {
-      background: url(http://lossur.es/short-docs/wp-content/themes/brooklyn/persistentmenu/x.png) no-repeat center;
+      background: url('../images/Close_Icon.svg') no-repeat center;
     }
 
-    .top-nav-current-slide, .top-nav-shot {
+    /*.top-nav-current-slide, .top-nav-shot {
       opacity: 0;
       height: 0;
       transition: opacity 0.3s ease-in-out, height 0s 0.3s;
-    }
+    }*/
   }
 }
 
 .top-nav-menu-button {
   position: absolute;
-  left: 40px;
+  right: 40px;
   top: 26px;
-  height: 30px;
-  width: 40px;
+  height: 20px;
+  width: 30px;
   background-image: url(../images/Menu_Icon.svg);
   background-color: rgba(255, 255, 255, 0);
-  background-size: 40px;
+  background-size: 100%;
   font-size: 20px;
   padding: 5px;
   border: none;
@@ -94,6 +98,7 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  z-index:10001;
 
   /* TODO is this bad? */
   outline: none;
@@ -108,10 +113,11 @@
   left: 50%;
   width: 70%;
   height: $nav-height;
-  margin-left: -35%;
-  font-size: 24px;
+  transform:translate(-50%,0);
+  font-size: 20px;
+  text-align:center;
   line-height: $nav-height;
-  overflow: hidden;
+  z-index:1000;
 
   &:hover {
     .top-nav-index-label {
@@ -143,34 +149,45 @@
     &.up {
       transform: translate3d(0, -$nav-height, 0);
       opacity: 0;
+      pointer-events:none;
     }
     &.down {
       transform: translate3d(0, $nav-height, 0);
       opacity: 0;
+	  pointer-events:none;
     }
   }
   .top-nav-shots-button {
-    position: absolute;
-    border: none;
+	position:relative;
+	top:60px;
+	margin:0 auto;
     outline: 0;
-    height: 10px;
-    width: 100%;
-    top: 60px;
-    background: url(../images/Next_Shot.svg) no-repeat center;
-    background-size: 60px;
+	border:none;
+	background:none;
     cursor: pointer;
+    width:40px;
+    height:30px;
+    display:block;
+    background:url('../images/Arrow_Icon.svg') no-repeat center;
+    background-size:100%;
     z-index: 5;
   }
+  
   .home .top-nav-shots-button {
     display: none;
   }
 
 .top-nav-shot {
   position: absolute;
-  right: 30px;
-  top: 5px;
+  left: 40px;
+  top: 25px;
   text-decoration: none;
   text-align: center;
+  background: url('../images/WR_half_logo.svg') no-repeat center center #cccccc;
+  background-size:80%;
+  width:40px;
+  height:40px;
+  z-index:1001;
 }
 
 @mixin top-nav-shot-arrow() {
@@ -184,6 +201,7 @@
   margin-left: 4px;
 }
 
+.top-nav-shot a { display:none !important; }
 .top-nav-shot-up {
   margin-top: 4px;
   background-image: url(../images/Next_Shot.svg);
@@ -196,14 +214,21 @@
 }
 
 .top-nav-shot-current {
-  padding: 31% 3px 0px 5px;
-  height: 20px;
-  width: 30px;
+  height: 40px;
+  width: 40px;
+  font-size: 18px;
+  line-height: 40px;
+  color:#000;
+  font-family:'Arial',sans-serif;
+  background:#cccccc;
+  position:absolute;
+  right:0;
+  -webkit-transform:translate(100%,0);
+  transform:translate(100%,0);
+  /*padding: 31% 3px 0px 5px;
   margin-top: 23px;
   background-image: url(../images/Shot_by_Shot_Icon.svg);
-  background-size: 40px;
-  font-size: 12px;
-  line-height: 12px;
+  background-size: 40px;*/
 }
 
 
@@ -296,13 +321,18 @@
 
 .nav-global {
   text-align: center;
+  height:100%;
   font-size: 43px;
   line-height: 48px;
   font-family: $base-font-medium;
+  font-weight:700;
+  background:rgba(204,204,204,0.5);
 
   div {
-    padding: 20px 0;
+    padding: 20px 0; 
   }
+  & > div:first-child { margin-top:100px; }
+
 
   a {
     color: white;
@@ -347,6 +377,23 @@
   .copyright {
     font-size: 14px;
     color: white;
+    width:50px;
+    height:50px;
+    display:block;
+    text-indent:-99999px;
+    position:relative;
+    margin:30px auto;
+    
+    &:after {
+	   content:"";
+	   position:absolute;
+	   width:100%;
+	   height:100%;
+	   display:block;
+	   top:0;
+	   left:0;
+	   background: url('../images/UNDO_LOGO_blk.png') no-repeat;
+    }
   }
 
 

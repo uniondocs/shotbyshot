@@ -11,7 +11,7 @@ body, html {
   margin: 0px;
   padding: 0px;
   font-family: $base-font;
-  font-weight: normal;
+  font-weight: 300;
   font-style: normal;
   background-color: black;
 }
@@ -32,6 +32,8 @@ body.noscroll {
 }
 
 .shot-background {
+	display:none;
+	
   position: fixed;
   top: -100px;
   left: 0px;
@@ -53,17 +55,19 @@ body.noscroll {
 }
 
 .shot-video-play {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  width: 82px;
-  margin-left: -41px;
-  text-align: center;
-  height: 82px;
-  cursor: pointer;
-  z-index: 3;
-  background-image: url(../images/play-button.svg);
-  transform: translateY(-50%);
+	display:none !important;
+	
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	width: 82px;
+	margin-left: -41px;
+	text-align: center;
+	height: 82px;
+	cursor: pointer;
+	z-index: 3;
+	background-image: url(../images/play-button.svg);
+	transform: translateY(-50%);
 }
 
 .slides {
