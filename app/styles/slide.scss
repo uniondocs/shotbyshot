@@ -53,10 +53,20 @@
 }
 
 .slide-outer-column {
-  // TODO(dbow): If [slide column] needs its container styled, that goes here!
+	height:auto;
 }
 .slide-column {
-  // TODO(dbow): Add [slide column] styles here!!!
+	background:#ccc;
+	color:#000;
+	font-size:24px;
+	height:auto;
+	position:relative;
+}
+.slide-column-container {
+	width:60%;
+	margin-left:20%;
+	padding:100px 0;
+	position:relative;
 }
 
 .slide-video-content {

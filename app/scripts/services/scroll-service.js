@@ -373,7 +373,9 @@ function ScrollService(ShotVideoService) {
 
 
   this.sizeAndPosition = function () {
-    this.height = window.innerHeight;
+	var screenHeight =  window.innerHeight;
+	
+    this.height = screenHeight;
     this.halfHeight = this.height / 2;
     this.doubleHeight = this.height * 2;
 
@@ -462,6 +464,20 @@ function ScrollService(ShotVideoService) {
 
         // TODO(dbow): Probably need to dynamically position the meta text
         //     based on the % (i.e. detect if it's likely to run off the page).
+      }
+      
+      // Dynamically set height and final keyFrame for Column slide
+      if(slide.type === 'column') {
+		  var lastIndex = slide.keyFrames.length - 1;
+		  var lastKey = slide.keyFrames[lastIndex];
+		  var columnHeight = slide.$el[0].offsetHeight;
+		  var bottomBuffer = 150;
+		  
+		  lastKey['key'] = columnHeight/screenHeight;
+		  lastKey['opacity'] = 1;
+		  
+		  slide.keyFrames[lastIndex] = lastKey;
+	      slide.$el.css('height', columnHeight + bottomBuffer +'px');
       }
 
       if (slide.isHeader || slide.type === 'author') {
@@ -701,10 +717,11 @@ function ScrollService(ShotVideoService) {
             }
           }
         }, this);
-
+        
         var transformX = 0;
         var transformY = 0;
         var scale = '';
+        
         _.forEach(css, function(val, prop) {
           if (prop === 'top') {
             transformY = (val * this.height).toFixed(1) + 'px';
