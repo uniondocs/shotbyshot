@@ -59,7 +59,7 @@ function ShotCtrl($scope, $sce, $filter, $timeout, $state, ShotService,
       var intro = [{
         type: 'introduction',
         shot: self.id,
-        nav: 'introduction',
+        nav: 'Volume Index',
         onEnter: function() {
           $scope.inView = true;
           if (!self.ready) {

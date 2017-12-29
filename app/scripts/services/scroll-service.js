@@ -414,6 +414,7 @@ function ScrollService(ShotVideoService) {
       slide.el = el;
       slide.$el = angular.element(el);
       slide.$inner = slide.$el.find('div').eq(0);
+      slide.$container = angular.element(slide.$inner[0].children[0]);
       slide.$meta = angular.element(
           slide.el.getElementsByClassName('meta-text')[0]);
       slide.index = i;
@@ -471,13 +472,29 @@ function ScrollService(ShotVideoService) {
 		  var lastIndex = slide.keyFrames.length - 1;
 		  var lastKey = slide.keyFrames[lastIndex];
 		  var columnHeight = slide.$el[0].offsetHeight;
+		  var columnWidth = Number(window.getComputedStyle(slide.$container[0]).getPropertyValue('width').replace("px",""));
 		  var bottomBuffer = 150;
-		  
+		  		  
+		  // calculate dynamic image heights and adjust columnHeight
+		  var imgs = slide.$el[0].querySelectorAll('img');
+		  imgs.forEach(function(img) {	
+			  if(img.width > 0) {
+			  	var imgResizePercent = columnWidth/img.width;
+			  	columnHeight = (columnHeight - img.height) + img.height * imgResizePercent;
+			  } else {
+				img.parentNode.removeChild(img); // no height information
+			  }
+			  angular.element(img).css({
+				  'width':'100%',
+				  'height':'auto'
+			  });
+		  });
+	  
 		  lastKey['key'] = columnHeight/screenHeight;
 		  lastKey['opacity'] = 1;
-		  
+		  		  
 		  slide.keyFrames[lastIndex] = lastKey;
-	      slide.$el.css('height', columnHeight + bottomBuffer +'px');
+		  slide.$el.css('height', columnHeight + bottomBuffer +'px'); 
       }
 
       if (slide.isHeader || slide.type === 'author') {
