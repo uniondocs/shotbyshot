@@ -132,6 +132,8 @@ function ShotCtrl($scope, $sce, $filter, $timeout, $state, ShotService,
   $scope.isHeaderSlide = function(slide) {
     var NAV_TYPES = [
       'introduction',
+      'text',
+      'column',
       'outro',
       'author',
       'photo',
@@ -145,6 +147,8 @@ function ShotCtrl($scope, $sce, $filter, $timeout, $state, ShotService,
   $scope.isNavSlide = function(slide) {
     var NAV_TYPES = [
       'introduction',
+      'text',
+      'column',
       'author',
       'photo',
       'video',
