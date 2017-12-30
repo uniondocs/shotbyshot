@@ -327,4 +327,17 @@
         opacity: 1;
       }
     }
+    
+    
+@media only screen and (max-device-width: 736px)  { 
+	[class*='-container'] {
+		width:90%;
+		margin-left:5%;
+	}
+	.slide-text, .slide-column {
+		font-size:16px;
+	}
+}
+
+
 

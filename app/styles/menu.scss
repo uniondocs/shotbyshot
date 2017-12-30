@@ -184,3 +184,33 @@ $shot-thumb-width: 400px;
 .nav-menu-scrollable {
   padding: 20px 0px;
 }*/
+
+
+@media only screen and (max-device-width: 736px)  { 
+	.nav-menu-details { 
+		text-align:center;
+		margin-top:100px;
+		
+		.nav-menu-appellation { 
+			width:100%; 
+			font-size:1em; 
+		}
+		.nav-menu-description {
+			width:100%;
+			text-align:left;
+			height:auto;
+		}
+		.nav-menu-utilities a {
+			margin-top:10px;
+			margin-bottom:10px;
+		}
+	}
+	.nav-menu-shots {
+		h4 {text-align:center;}
+		
+		.nav-menu-shot {
+			width:100%;
+			height:185px;	
+		}
+	}
+}

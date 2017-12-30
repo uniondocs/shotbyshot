@@ -58,7 +58,7 @@
       opacity: 1;
       transition: opacity 0.3s ease-in-out;
       z-index:100;
-      z-index:1;
+      overflow-y:scroll;
       pointer-events:auto;
     }
 
@@ -398,4 +398,30 @@
     }
   }
 
+@media only screen and (max-device-width: 736px)  { 
+	.side-nav { display:none; }
+	
+	.top-nav-shot {
+		left:20px;
+		height:30px;
+		width:30px;
+		
+		.top-nav-shot-current {
+			width:30px;
+			height:30px;
+			font-size:14px;
+			line-height:30px;	
+		}
+	}
+	.top-nav-current-slide { 
+		width:55%; 
+		font-size:1em;
+	}
+	.top-nav-menu-button {right:20px;}
+	
+	.nav-global {
+		font-size:28px;
+		line-height:28px;
+	}
+}
 
