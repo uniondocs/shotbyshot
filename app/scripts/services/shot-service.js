@@ -5,15 +5,15 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
   var self = this;
 
   var current = parseInt($stateParams.shot, 10);
+  // TODO: This will move
   document.title = document.title + " - Vol " + romanize(current);
-  
-  
+    
   /**
    * Current shot number.
    * @type {number}
    */
   this.current = !isNaN(current) ? current : 0;
-
+  
   /**
    * Get Video URL of current shot.
    * @return {string}

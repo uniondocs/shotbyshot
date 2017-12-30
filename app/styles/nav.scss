@@ -14,18 +14,12 @@
 
   .nav-menu, .nav-global {
     opacity: 0;
-    overflow: hidden;
 	transition: height 0.1s 0.1s, opacity 0.3s ease-in-out;
+	pointer-events:none;
   }
 
   .nav-menu {
-    position: absolute;
-    left: 0px;
-    right: 0px;
-    top:0;
-    bottom: 0px;
-    background:rgba(204,204,204,0.5);
-    pointer-events:none;
+    background:rgba(204,204,204,0.8);
   }
 
   .top-nav-current-slide, .top-nav-shot {
@@ -39,6 +33,9 @@
       height: 100%;
       opacity: 1;
       transition: opacity 0.3s ease-in-out;
+      position:absolute;
+      z-index:1;
+      pointer-events:auto;
     }
 
     .top-nav-shots-button {
@@ -61,18 +58,19 @@
       opacity: 1;
       transition: opacity 0.3s ease-in-out;
       z-index:100;
-      position:relative;
+      z-index:1;
+      pointer-events:auto;
     }
 
     .top-nav-menu-button {
       background: url('../images/Close_Icon.svg') no-repeat center;
     }
 
-    /*.top-nav-current-slide, .top-nav-shot {
+    .top-nav-current-slide {
       opacity: 0;
       height: 0;
       transition: opacity 0.3s ease-in-out, height 0s 0.3s;
-    }*/
+    }
   }
 }
 
@@ -320,13 +318,17 @@
 }
 
 .nav-global {
+	position:absolute;
+	left:0;
+	right:0;
+	top:0;
   text-align: center;
   height:100%;
   font-size: 43px;
   line-height: 48px;
   font-family: $base-font-medium;
   font-weight:700;
-  background:rgba(204,204,204,0.5);
+  background:rgba(204,204,204,0.8);
 
   div {
     padding: 20px 0; 
