@@ -59,6 +59,8 @@ function ShotCtrl($scope, $sce, $filter, $timeout, $state, ShotService,
       var intro = [{
         type: 'introduction',
         shot: self.id,
+        title: annotations[0].title,
+        authors: annotations[0].author.name,
         nav: 'Volume Index',
         onEnter: function() {
           $scope.inView = true;
@@ -119,6 +121,10 @@ function ShotCtrl($scope, $sce, $filter, $timeout, $state, ShotService,
       document.querySelector('.nav-menu-shots').scrollTop = scrollTarget;
     }, 300);
   });
+  
+  ShotService.getShots().then(function(shots) {
+  	$scope.shots = shots;
+  });
 
   ShotService.getTags(0).then(function(tags) {
     self.tags = _.map(_.sortBy(tags, function (tag) {
@@ -166,7 +172,13 @@ function ShotCtrl($scope, $sce, $filter, $timeout, $state, ShotService,
   $scope.thumbnailForShot = function (shot) {
     return '/wp/wp-content/uploads/Shots_400px/' + shot.slug + '.png';
   };
-
+  
+  $scope.annotationsForShot = function (shot) {
+	ShotService.getShot( Number(shot.slug) ).then(function(annotated) {	  
+		
+	});
+  }
+    
   $scope.toggleMenu = function () {
     if ($scope.menuIsOn) {
       ShotVideoService.resumeLoop();

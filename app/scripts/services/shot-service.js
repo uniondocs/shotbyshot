@@ -80,6 +80,35 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
       });
     return deferred.promise;
   };
+  
+  // Get all shots
+  this.getShots = function() {
+	var deferred = $q.defer();
+	var context = this;
+
+	$http({
+      method: 'GET',
+      url: '/wp/?json=get_category_index'
+    }).success(function(data) {
+      if (data.status === 'ok') {
+	    var shots = [];
+
+	    (data.categories).forEach(function(cat) {
+			context.getShot(Number(cat.slug)).then(function(shot) {
+				shots.push(shot[0]);
+			});
+		});
+		
+		deferred.resolve(shots);
+      } else {
+        deferred.reject('Error fetching shots');
+      }
+    }).error(function() {
+      deferred.reject('Error fetching shots');
+    });
+        
+    return deferred.promise;
+  }
 
   var thumbnailUrl = '/wp/?json=get_category_index';
   this.getThumbnails = function(page) {

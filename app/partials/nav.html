@@ -17,8 +17,8 @@
 		<div class="nav-menu-inner">
 			<div class="nav-menu-details">
 				<div class="nav-menu-appellation">
-					<h1>All of our grievances are connected: An Interview with The Illuminator Collective</h1>
-					<h3>By Sherry Millner and Ernest Larsen</h3>
+					<h1>{{ shot.annotations[0].title }}</h1>
+					<h3>{{ shot.annotations[0].author.name }}</h3>
 					
 					<div class="nav-menu-utilities">
 						<a href="#">Download PDF</a>
@@ -27,8 +27,7 @@
 					</div>
 				</div>
 				<div class="nav-menu-description">
-					<p>Sherry Millner and Ernie Larsen are the anarchist co-creators of the interventionist video project State of Emergency, collaborating with more than 15 artists in a silent shout-out against U.S. invasions of the Middle East and the global plague of neo-liberal ideology. Together they have also produced several situation-ist films, including the new video, Partial Critique of Separation, two anti-documentaries redefining crime, and a series of semi-autobiographical videos focusing on the authoritarian structures indispensable to capital. Millner is also an installation artist and photomonteur; Larsen a novelist and media critic.</p>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod rutrum eros vel gravida. Ut in volutpat lacus. Vivamus mollis sodales euismod. Phasellus dignissim imperdiet placerat. Sed eu semper nunc. Nam non pulvinar lectus, in aliquet metus. Quisque ultricies sodales ante. Donec euismod diam a semper posuere. Nulla facilisi. Phasellus sit amet ex a eros cursus porttitor at ac tellus. Curabitur lobortis egestas molestie.</p>
+					<p ng-bind-html="shot.annotations[0].author.description"></p>
 				</div>
 			</div>  
 			
@@ -42,11 +41,12 @@
 				<h4>Volume I: The Camera</h4>	
 				
 				<div class="nav-menu-scrollable">
-					<a class="nav-menu-shot" ng-repeat="shot in thumbs" ui-sref="shot({ shot: shot.slug })" ng-style="{'background-image': 'url(' + thumbnailForShot(shot) + ')'}">
+					<a class="nav-menu-shot" ng-repeat="shot in shots | orderBy:'slug'" ui-sref="shot({ shot: shot.slug })">
+						<div class="nav-menu-shot-thumb"><img ng-src="{{ thumbnailForShot( shot ) }}" /></div>
 						<div class="nav-menu-shot-number">{{ shot.slug | number }}</div>
 						<div class="nav-menu-shot-details">
-							<strong>All of our grievances are connected: An Interview with The Illuminator Collective</strong>
-							<p>By Sherry Millner and Ernest Larsen</p>
+							<strong>{{ shot.title }}</strong>
+							<p>{{ shot.author.name }}</p>
 						</div>
 					</a>
 				</div>

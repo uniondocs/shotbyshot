@@ -5,18 +5,29 @@ function Annotation() {
     if (!data) {
       return;
     }
-
-    // Parse author info.
-    this.author = {
-      name: data.author && data.author.name,
-      image: '/wp/wp-content/uploads/authors/' + data.author.nickname + '.jpg'
-    };
-
-    // Store content.
+        
+	this.slug = data.categories[0].slug;
+	    
+    // Store the title & content
+    this.title = data.title;
     this.content = data.content || '';
-
+    
+    // Get the Authors & Description
+	if(data.custom_fields.authors) {
+		this.author = {
+	      name: data.custom_fields.authors[0],
+	      description: data.custom_fields.description[0],
+	      image: '/wp/wp-content/uploads/authors/' + data.author.nickname + '.jpg'
+	    };
+	} else {
+		this.author = {
+	      name: data.author && data.author.name,
+	      description: data.author.description,
+	      image: '/wp/wp-content/uploads/authors/' + data.author.nickname + '.jpg'
+	    };
+	}
+	
     // Parse custom fields (street view, timecodes, and highlight).
-
     var customFields = data.custom_fields;
 
     function getCustomField(key) {
