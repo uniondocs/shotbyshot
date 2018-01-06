@@ -20,7 +20,7 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
    * Current volume number.
    * @type {number}
    */
-  this.currentVolume = !isNaN(currentVolume) ? currentVolume : 1;
+  this.currentVolume = !isNaN(currentVolume) ? currentVolume : 0;
 
   /**
    * Get Video URL of current shot.
@@ -33,9 +33,9 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
   };
 
   /**
-   * Max number of shots that exist.
+   * Max number of articles in a volume.
    */
-  var max = 300;
+  var max = 100;
 
   /**
    * Get the next shot, if there is one.
@@ -43,7 +43,7 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
    */
   this.getNext = function() {
     var next = this.current + 1;
-    return next <= max ? next : null;
+    return next <= max ? $filter('shot')(next) : null;
   };
 
   /**
@@ -52,7 +52,7 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
    */
   this.getPrevious = function() {
     var previous = this.current - 1;
-    return previous >= 0 ? previous : null;
+    return previous >= 0 ? $filter('shot')(previous) : null;
   };
 
   /**
@@ -93,6 +93,8 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
     return deferred.promise;
   };
 
+  var articleCountByVolume = {};
+
   // Get all volumes
   this.getVolumes = function() {
     var deferred = $q.defer();
@@ -105,12 +107,17 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
       if (data.status === 'ok') {
         var volumes = [];
 
-        // TODO(dbow): Remove when only volume categories are present.
         data.categories.forEach(function(category) {
+          // TODO(dbow): Remove this filter when only volume categories are
+          // present in the API.
           if (category.slug.length === 2) {
             volumes.push(category);
+            // Store post count by volume to update the max shot value.
+            articleCountByVolume[parseInt(category.slug, 10)] = category.post_count;
           }
         });
+
+        max = articleCountByVolume[currentVolume];
 
         deferred.resolve(volumes);
       } else {
@@ -135,8 +142,6 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
     }).success(function(data) {
       if (data.status === 'ok') {
         deferred.resolve(data.categories);
-        // Set max to last thumbnail's slug.
-        max = parseInt(_.last(data.categories).slug, 10);
       } else {
         deferred.reject('Error fetching shots');
       }
@@ -194,13 +199,14 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
   // Update the current shot number on any state change.
   $rootScope.$on('$stateChangeStart',
       function(event, toState, toParams, fromState, fromParams) {
-        var shotNumber = parseInt(toParams.shot, 10);
-        if (!isNaN(shotNumber) && shotNumber >= 0 && shotNumber <= max) {
-          self.current = shotNumber;
-        }
         var volumeNumber = parseInt(toParams.volume, 10);
         if (!isNaN(volumeNumber)) {
           self.currentVolume = volumeNumber;
+          max = articleCountByVolume[volumeNumber];
+        }
+        var shotNumber = parseInt(toParams.shot, 10);
+        if (!isNaN(shotNumber) && shotNumber >= 0 && shotNumber <= max) {
+          self.current = shotNumber;
         }
       });
 }
@@ -208,7 +214,7 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
 angular
   .module('shotbyshot')
   .service('ShotService', ShotService);
-  
+
 
 // Helper to convert digit to roman numeral 
 function romanize (num) {

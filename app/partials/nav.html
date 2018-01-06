@@ -8,9 +8,9 @@
         <button class="top-nav-shots-button"></button>
     </div>
     <div class="top-nav-shot" ng-show="shot.id">
-        <a ng-show="shot.previous" ui-sref="shot({ shot: shot.previous })" class="top-nav-shot-down"></a>
+        <a ng-show="shot.previous" ui-sref="volume.shot({ shot: shot.previous })" class="top-nav-shot-down"></a>
         <div class="top-nav-shot-current">{{ shot.id }}</div>
-        <a ng-show="shot.next" ui-sref="shot({ shot: shot.next })" class="top-nav-shot-up"></a>
+        <a ng-show="shot.next" ui-sref="volume.shot({ shot: shot.next })" class="top-nav-shot-up"></a>
     </div>
 
     <div class="nav-menu">
