@@ -5,7 +5,15 @@ angular
           ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ui.router'])
   .config(function ($stateProvider, $urlRouterProvider, $sceDelegateProvider) {
     $stateProvider
-      .state('shot', {
+      .state('volume', {
+        template: '<ui-view/>',
+        url: '/:volume',
+        abstract: true,
+        controller: function($scope, $stateParams) {
+          $scope.volume = $stateParams.volume;
+        }
+      })
+      .state('volume.shot', {
         url: '/:shot',
         templateUrl: 'partials/shot.html',
         controller: 'ShotCtrl',

@@ -1,13 +1,13 @@
 'use strict';
 
 /**
- * Takes in an integer and returns a 4 digit zero-padded shot string.
- * e.g. 1 => '0001', 214 => '0214', 9999 => '9999'
+ * Takes in an integer and returns a 2 digit zero-padded shot string.
+ * e.g. 1 => '01', 24 => '24'
  * @param {number} num to convert.
- * @return {string} 0-padded 4 digit string shot number.
+ * @return {string} 0-padded 2 digit string shot number.
  */
 function ShotFilter(num) {
-  return ('0000' + num).slice(-4);
+  return ('00' + num).slice(-2);
 }
 
 angular

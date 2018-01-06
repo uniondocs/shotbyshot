@@ -121,9 +121,9 @@ function ShotCtrl($scope, $sce, $filter, $timeout, $state, ShotService,
       document.querySelector('.nav-menu-shots').scrollTop = scrollTarget;
     }, 300);
   });
-  
-  ShotService.getShots().then(function(shots) {
-  	$scope.shots = shots;
+
+  ShotService.getVolumes().then(function(volumes) {
+    $scope.volumes = volumes;
   });
 
   ShotService.getTags(0).then(function(tags) {

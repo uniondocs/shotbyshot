@@ -5,15 +5,23 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
   var self = this;
 
   var current = parseInt($stateParams.shot, 10);
+  var currentVolume = parseInt($stateParams.volume, 10);
+
   // TODO: This will move
   document.title = document.title + " - Vol " + romanize(current);
-    
+
   /**
    * Current shot number.
    * @type {number}
    */
   this.current = !isNaN(current) ? current : 0;
-  
+
+  /**
+   * Current volume number.
+   * @type {number}
+   */
+  this.currentVolume = !isNaN(currentVolume) ? currentVolume : 1;
+
   /**
    * Get Video URL of current shot.
    * @return {string}
@@ -53,7 +61,7 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
    */
   this.cache = [];
 
-  var urlBase = '/wp/?json=get_category_posts&post_type=mm_annotation&slug=';
+  var urlBase = '/wp/?json=get_post&post_type=mm_annotation&slug=';
 
   /**
    * @param {number=} opt_id optional id of shot to fetch. Defaults to current.
@@ -64,49 +72,54 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
     var deferred = $q.defer();
     var id = (typeof opt_id === 'number' && !isNaN(opt_id)) ? opt_id :
         this.current;
+
+    id = $filter('shot')(this.currentVolume) + '-' + $filter('shot')(id);
+
     if (this.cache[id]) {
       deferred.resolve(this.cache[id]);
       return deferred.promise;
     }
-    var url = urlBase + $filter('shot')(id);
+
+    var url = urlBase + id;
     $http({
         method: 'GET',
         url: url
       }).success(function(data) {
-        self.cache[id] = AnnotationsService.parse(data.posts);
+        self.cache[id] = AnnotationsService.parse(data.post);
         deferred.resolve(self.cache[id]);
       }).error(function() {
         deferred.reject('Error fetching shot ' + id);
       });
     return deferred.promise;
   };
-  
-  // Get all shots
-  this.getShots = function() {
-	var deferred = $q.defer();
-	var context = this;
 
-	$http({
+  // Get all volumes
+  this.getVolumes = function() {
+    var deferred = $q.defer();
+    var self = this;
+
+    $http({
       method: 'GET',
       url: '/wp/?json=get_category_index'
     }).success(function(data) {
       if (data.status === 'ok') {
-	    var shots = [];
+        var volumes = [];
 
-	    (data.categories).forEach(function(cat) {
-			context.getShot(Number(cat.slug)).then(function(shot) {
-				shots.push(shot[0]);
-			});
-		});
-		
-		deferred.resolve(shots);
+        // TODO(dbow): Remove when only volume categories are present.
+        data.categories.forEach(function(category) {
+          if (category.slug.length === 2) {
+            volumes.push(category);
+          }
+        });
+
+        deferred.resolve(volumes);
       } else {
-        deferred.reject('Error fetching shots');
+        deferred.reject('Error fetching volumes');
       }
     }).error(function() {
-      deferred.reject('Error fetching shots');
+      deferred.reject('Error fetching volumes');
     });
-        
+
     return deferred.promise;
   }
 
@@ -184,6 +197,10 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
         var shotNumber = parseInt(toParams.shot, 10);
         if (!isNaN(shotNumber) && shotNumber >= 0 && shotNumber <= max) {
           self.current = shotNumber;
+        }
+        var volumeNumber = parseInt(toParams.volume, 10);
+        if (!isNaN(volumeNumber)) {
+          self.currentVolume = volumeNumber;
         }
       });
 }

@@ -41,12 +41,11 @@
 				<h4>Volume I: The Camera</h4>	
 				
 				<div class="nav-menu-scrollable">
-					<a class="nav-menu-shot" ng-repeat="shot in shots | orderBy:'slug'" ui-sref="shot({ shot: shot.slug })">
-						<div class="nav-menu-shot-thumb"><img ng-src="{{ thumbnailForShot( shot ) }}" /></div>
-						<div class="nav-menu-shot-number">{{ shot.slug | number }}</div>
+					<a class="nav-menu-shot" ng-repeat="volume in volumes | orderBy:'slug'" ui-sref="volume.shot({ volume: volume.slug, shot: '01' })">
+						<div class="nav-menu-shot-thumb"><img ng-src="{{ thumbnailForVolume( volume ) }}" /></div>
+						<div class="nav-menu-shot-number">{{ volume.slug | number }}</div>
 						<div class="nav-menu-shot-details">
-							<strong>{{ shot.title }}</strong>
-							<p>{{ shot.author.name }}</p>
+							<strong>{{ volume.title }}</strong>
 						</div>
 					</a>
 				</div>
