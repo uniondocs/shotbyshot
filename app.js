@@ -22,13 +22,13 @@ var directory = 'dist';
 
   app.get('/wp/*', function(req, res){
     req.url = req.url.replace('/wp', '');
-    // Try to return cached JSON.
+    /* Try to return cached JSON.
     if (cache[req.url] && cache[req.url].body) {
       console.log('CACHED RESPONSE: ' + req.url);
       var cached = cache[req.url];
       res.set(cached.headers);
       return res.send(cached.body);
-    }
+    }*/
     // This is important! Wordpress does not like it when host is passed
     // in the proxy.
     delete req.headers['host'];
