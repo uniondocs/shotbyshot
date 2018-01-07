@@ -9,7 +9,7 @@
     </div>
     <div class="top-nav-shot" ng-show="shot.id">
         <a ng-show="shot.previous" ui-sref="volume.shot({ shot: shot.previous })" class="top-nav-shot-down"></a>
-        <div class="top-nav-shot-current">{{ shot.id }}</div>
+        <div class="top-nav-shot-current">{{ volume | number }}.{{ shot.id }}</div>
         <a ng-show="shot.next" ui-sref="volume.shot({ shot: shot.next })" class="top-nav-shot-up"></a>
     </div>
 
@@ -38,14 +38,14 @@
 			</div>
 			
 			<div class="nav-menu-shots" ng-show="showMenuTab === 'shots'">
-				<h4>Volume I: The Camera</h4>	
+				<h4>{{ currentVolume.title }}</h4>
 				
 				<div class="nav-menu-scrollable">
-					<a class="nav-menu-shot" ng-repeat="volume in volumes | orderBy:'slug'" ui-sref="volume.shot({ volume: volume.slug, shot: '01' })">
-						<div class="nav-menu-shot-thumb"><img ng-src="{{ thumbnailForVolume( volume ) }}" /></div>
-						<div class="nav-menu-shot-number">{{ volume.slug | number }}</div>
+					<a class="nav-menu-shot" ng-repeat="shot in shots | orderBy:'slug'" href="#/{{volume}}/{{shot.index}}">
+						<div class="nav-menu-shot-thumb"><img ng-src="{{ thumbnailForShot( shot ) }}" /></div>
+						<div class="nav-menu-shot-number">{{ shot.index | number }}</div>
 						<div class="nav-menu-shot-details">
-							<strong>{{ volume.title }}</strong>
+							<strong>{{ shot.title }}</strong>
 						</div>
 					</a>
 				</div>

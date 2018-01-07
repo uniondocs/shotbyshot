@@ -1,10 +1,9 @@
 'use strict';
 
-function ShotCtrl($scope, $sce, $filter, $timeout, $state, ShotService,
+function ShotCtrl($scope, $sce, $filter, $timeout, $state, $stateParams, ShotService,
                   AnnotationParserService, ShotVideoService, ScrollService,
                   AnalyticsService, AutoScrollerService) {
   var self = this;
-
 
   this.id = ShotService.current;
   this.next = ShotService.getNext();
@@ -121,10 +120,22 @@ function ShotCtrl($scope, $sce, $filter, $timeout, $state, ShotService,
       document.querySelector('.nav-menu-shots').scrollTop = scrollTarget;
     }, 300);
   });
-
+  
   ShotService.getVolumes().then(function(volumes) {
     $scope.volumes = volumes;
+    
+    volumes.forEach(function(volume) {
+		if(volume.slug === $stateParams.volume) {
+			$scope.currentVolume = volume;
+			return;
+		}  
+    });
   });
+  
+  ShotService.getVolumeShots().then(function(shots) {
+    $scope.shots = shots;
+  });
+  
 
   ShotService.getTags(0).then(function(tags) {
     self.tags = _.map(_.sortBy(tags, function (tag) {

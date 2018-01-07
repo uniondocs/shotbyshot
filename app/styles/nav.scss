@@ -13,6 +13,7 @@
   font-family:'Arial',sans-serif;
 
   .nav-menu, .nav-global {
+	width:100%;
     opacity: 0;
 	transition: height 0.1s 0.1s, opacity 0.3s ease-in-out;
 	pointer-events:none;

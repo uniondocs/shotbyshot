@@ -20,7 +20,7 @@ angular
         controllerAs: 'shot'
       });
 
-    $urlRouterProvider.otherwise('/0001');
+    $urlRouterProvider.otherwise('/01/01');
 
      $sceDelegateProvider.resourceUrlWhitelist([
        // Allow same origin resource loads.

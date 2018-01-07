@@ -7,7 +7,6 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
   var current = parseInt($stateParams.shot, 10);
   var currentVolume = parseInt($stateParams.volume, 10);
 
-  // TODO: This will move
   document.title = document.title + " - Vol " + romanize(current);
 
   /**
@@ -130,7 +129,41 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
 
     return deferred.promise;
   }
+  
+      
+  // Get Shots (Posts) in Volume
+  this.getVolumeShots = function() {
+    var deferred = $q.defer();
+    var self = this;
 
+    $http({
+      method: 'GET',
+      url: '/wp/?json=get_category_posts&category_slug='+$stateParams.volume
+    }).success(function(data) {
+      if (data.status === 'ok') {
+	      
+	    data.posts.forEach(function(post) {
+		   var indexes = post.slug.split("-");
+		   
+		   if(indexes.length > 1) {
+			   post.volume = indexes[0];
+			   post.index = indexes[1];
+		   }
+        });
+        
+        deferred.resolve(data.posts);
+      } else {
+        deferred.reject('Error fetching volumes');
+      }
+    }).error(function() {
+      deferred.reject('Error fetching volumes');
+    });
+
+    return deferred.promise;
+  }
+  
+
+  // Get thumbnails
   var thumbnailUrl = '/wp/?json=get_category_index';
   this.getThumbnails = function(page) {
     var deferred = $q.defer();
