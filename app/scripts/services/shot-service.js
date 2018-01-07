@@ -27,8 +27,9 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
    * @return {string}
    */
   this.getVideoUrl = function() {
-    var url = 'https://s3.amazonaws.com/world-records-journal/' +
-        $filter('shot')(this.current) + '.mp4';
+    var id = $filter('shot')(this.currentVolume) + '-' +
+        $filter('shot')(this.current);
+    var url = 'https://s3.amazonaws.com/world-records-journal/' + id + '.mp4';
     return url;
   };
 
