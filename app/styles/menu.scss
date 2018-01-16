@@ -39,11 +39,20 @@
 	margin-left:10%;
 	margin-top:10%;
 	font-family:$base-font-medium;
-	color:#000;
+	color:#222020;
+	
+  h4 {
+	  font-family: 'Arial',sans-serif;
+	  line-height:2em;
+	  border-bottom:3px solid #222020;
+	  font-weight:normal;
+	  font-size:1.2em;
+	  margin-top:-1em;
+	  margin-bottom:20px;
+  }
 }
 .nav-menu-details {
 	padding:30px 0;
-	border-top:3px solid #000;
 
 	.nav-menu-appellation {
 		width:64%;
@@ -66,7 +75,7 @@
 		
 		a {
 			width:150px;
-			border:1px solid #000;
+			border:1px solid #222020;
 			padding:10px;
 			display:inline-block;
 			margin-right:20px;
@@ -75,9 +84,11 @@
 			text-decoration:none;
 			font-family:'Arial',sans-serif;
 			text-align:center;
-			color:#000;
+			color:#222020;
 			
 			&:hover {opacity:0.65;}
+			&.pdf-download:after {content:"PDF Download"}
+			&.pdf-download:hover:after {content:"coming soon";}
 		}
 	}
 
@@ -90,15 +101,6 @@ $shot-thumb-width: 400px;
   right: 43px;
   padding-bottom:40px;
   
-  h4 {
-	  font-family: 'Arial',sans-serif;
-	  line-height:2em;
-	  border-bottom:3px solid #000;
-	  font-weight:normal;
-	  font-size:1.2em;
-	  margin-top:-1em;
-	  margin-bottom:20px;
-  }
 }
   .nav-menu-shot {
     position: relative;
@@ -139,11 +141,15 @@ $shot-thumb-width: 400px;
 	  	background:#ccc;
   	}
 	.nav-menu-shot-details {
-	 	color:#000;
+	 	color:#222020;
 	 	padding:8px 0;
-	 	line-height:1.3em;
 	 	
-	 	strong {font-weight:bold;}
+	 	p {
+		 	line-height:1.2em;
+		 	margin-top:12px;
+		 	
+		 	strong {font-weight:bold;}
+		}
 	}
 	.nav-menu-shot-number {
 	  $height: 85px;

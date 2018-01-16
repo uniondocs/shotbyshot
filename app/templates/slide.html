@@ -2,18 +2,24 @@
 
   <!-- INTRO -->
   <div ng-if="slide.type === 'introduction'" class="slide-intro slide-inner">
-    <div class="slide-center">
-      <h3>{{ slide.title }}</h3>
-      <h4>{{ slide.authors }}</h4>
-    </div>
+	  <div class="slide-center">
+		<div class="intro-splash">
+		  <img ng-src="../images/WR_full_logo.svg" />
+		  <h4>{{ slide.volume.title }}</h4>
+		</div>
+	    <div class="intro-title">
+	      <h3>{{ slide.title }}</h3>
+	      <h4>{{ slide.authors }}</h4>
+	    </div>
+	  </div>
     <div class="slide-scroll-indicator"></div>
   </div>
 
   <!-- OUTRO -->
   <div ng-if="slide.type === 'outro'" class="slide-outro slide-inner">
     <div class="slide-center">
-      <h3>End</h3>
-      <div class="slide-shot-number">{{ slide.shot }}</div>
+      <!--<h3>End</h3>
+      <div class="slide-shot-number">{{ slide.shot }}</div>-->
       <div class="slide-outro-actions">
         <a class="slide-outro-action" ng-show="slide.next" ui-sref="volume.shot({shot: slide.next})">Next Article</a>
       </div>

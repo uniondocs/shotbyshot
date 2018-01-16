@@ -5,10 +5,10 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
   var self = this;
 
   var current = parseInt($stateParams.shot, 10);
-  var currentVolume = parseInt($stateParams.volume, 10);
+  var currentVolumeIndex = parseInt($stateParams.volume, 10);
 
   document.title = document.title + " - Vol " + romanize(current);
-
+    
   /**
    * Current shot number.
    * @type {number}
@@ -19,14 +19,14 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
    * Current volume number.
    * @type {number}
    */
-  this.currentVolume = !isNaN(currentVolume) ? currentVolume : 0;
+  this.currentVolumeIndex = !isNaN(currentVolumeIndex) ? currentVolumeIndex : 0;
 
   /**
    * Get Video URL of current shot.
    * @return {string}
    */
   this.getVideoUrl = function() {
-    var id = $filter('shot')(this.currentVolume) + '-' +
+    var id = $filter('shot')(this.currentVolumeIndex) + '-' +
         $filter('shot')(this.current);
     var url = 'https://s3.amazonaws.com/world-records-journal/' + id + '.mp4';
     return url;
@@ -73,7 +73,7 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
     var id = (typeof opt_id === 'number' && !isNaN(opt_id)) ? opt_id :
         this.current;
 
-    id = $filter('shot')(this.currentVolume) + '-' + $filter('shot')(id);
+    id = $filter('shot')(this.currentVolumeIndex) + '-' + $filter('shot')(id);
 
     if (this.cache[id]) {
       deferred.resolve(this.cache[id]);
@@ -94,7 +94,8 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
   };
 
   var articleCountByVolume = {};
-
+  
+  
   // Get all volumes
   this.getVolumes = function() {
     var deferred = $q.defer();
@@ -117,7 +118,7 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
           }
         });
 
-        max = articleCountByVolume[currentVolume];
+        max = articleCountByVolume[currentVolumeIndex];
 
         deferred.resolve(volumes);
       } else {
@@ -130,7 +131,7 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
     return deferred.promise;
   }
   
-      
+  
   // Get Shots (Posts) in Volume
   this.getVolumeShots = function() {
     var deferred = $q.defer();
@@ -148,6 +149,7 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
 		   if(indexes.length > 1) {
 			   post.volume = indexes[0];
 			   post.index = indexes[1];
+			   post.annotations = AnnotationsService.parse(post);
 		   }
         });
         
@@ -235,7 +237,7 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
       function(event, toState, toParams, fromState, fromParams) {
         var volumeNumber = parseInt(toParams.volume, 10);
         if (!isNaN(volumeNumber)) {
-          self.currentVolume = volumeNumber;
+          self.currentVolumeIndex = volumeNumber;
           max = articleCountByVolume[volumeNumber];
         }
         var shotNumber = parseInt(toParams.shot, 10);

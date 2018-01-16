@@ -14,6 +14,22 @@ body, html {
   font-weight: 300;
   font-style: normal;
   background-color: black;
+  
+  	text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+}
+h1, h2, h3, h4, h5, h6 {
+	font-weight:normal;
+}
+p { 
+	color: #222020;
+	line-height:1.7; 
+}
+::selection, ::-moz-selection {
+	background:black;
+	color:#fff;
 }
 
 body.noscroll {

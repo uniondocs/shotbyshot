@@ -10,8 +10,10 @@ function ShotCtrl($scope, $sce, $filter, $timeout, $state, $stateParams, ShotSer
   this.previous = ShotService.getPrevious();
   this.videoUrl = ShotService.getVideoUrl();
   this.shots = [];
-  this.thumbsForTag = {};
-
+  this.volumes = [];
+  this.currentVolume = null;
+  this.thumbsForTag = {};  
+  
   AnalyticsService.pageview(window.location.href,
       document.title + ' - Shot ' + this.id);
 
@@ -60,12 +62,13 @@ function ShotCtrl($scope, $sce, $filter, $timeout, $state, $stateParams, ShotSer
         shot: self.id,
         title: annotations[0].title,
         authors: annotations[0].author.name,
-        nav: 'Volume Index',
+        nav: 'introduction',
         onEnter: function() {
           $scope.inView = true;
           if (!self.ready) {
             $timeout(function() {
               self.ready = true;
+              fadeIntroSplash();
             }, 3000);
           }
           $scope.$apply();
@@ -98,11 +101,24 @@ function ShotCtrl($scope, $sce, $filter, $timeout, $state, $stateParams, ShotSer
       var slides = intro.concat(AnnotationParserService.parse(annotations), outro);
       self.annotations = annotations;
       self.slides = slides;
+      
       _.each(slides, function (slide) {
         slide.isNav = $scope.isNavSlide(slide);
         slide.isHeader = $scope.isHeaderSlide(slide);
+        $timeout(function() {
+			slide.volume = self.currentVolume;
+    	}, 300);
       });
     });
+  }
+  
+  function fadeIntroSplash() {
+    var splash = document.querySelector('.intro-splash');
+    splash.style.opacity = 0;
+     
+    $timeout(function() {
+    	splash.nextElementSibling.style.opacity = 1;
+	}, 1000);
   }
 
   // TODO: probably can lazy load this, but i'm not
@@ -124,14 +140,14 @@ function ShotCtrl($scope, $sce, $filter, $timeout, $state, $stateParams, ShotSer
   ShotService.getVolumes().then(function(volumes) {
     $scope.volumes = volumes;
     
-    volumes.forEach(function(volume) {
+    _.each(volumes, function(volume) {
 		if(volume.slug === $stateParams.volume) {
-			$scope.currentVolume = volume;
-			return;
+			$scope.currentVolume = self.currentVolume = volume;
 		}  
     });
   });
   
+    
   ShotService.getVolumeShots().then(function(shots) {
     $scope.shots = shots;
   });

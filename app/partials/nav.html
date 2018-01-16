@@ -1,27 +1,36 @@
 <nav class="top-nav" ng-class="{menu: menuIsOn && !globalIsOn, global: globalIsOn}">
-    <button class="top-nav-menu-button" ng-click="toggleGlobalMenu()"></button>
-    <div class="top-nav-current-slide" ng-click="toggleMenu()">
-        <div class="top-nav-author down" ng-repeat="slide in shot.slides | filter:isHeaderSlide">
-          {{ slide.nav || slide.annotation.author.name }}
-        </div>
-        <div class="top-nav-index-label">Volume Index</div>
-        <button class="top-nav-shots-button"></button>
-    </div>
-    <div class="top-nav-shot" ng-show="shot.id">
-        <a ng-show="shot.previous" ui-sref="volume.shot({ shot: shot.previous })" class="top-nav-shot-down"></a>
-        <div class="top-nav-shot-current">{{ volume | number }}.{{ shot.id }}</div>
-        <a ng-show="shot.next" ui-sref="volume.shot({ shot: shot.next })" class="top-nav-shot-up"></a>
+    <button class="top-nav-menu-button" ng-if="!menuIsOn" ng-click="toggleGlobalMenu()"></button>
+    <button class="top-nav-menu-button" ng-if="menuIsOn && !globalIsOn" ng-click="toggleMenu()"></button>
+
+    <div class="top-nav-header" ng-show="shot.id" ng-click="toggleMenu()">
+	    <div ng-include="'../images/WR_half_logo.svg'" class="top-nav-logo"></div>
+	    
+		<div class="top-nav-breadcrumbs">
+	        <!--<a ng-show="shot.previous" ui-sref="volume.shot({ shot: shot.previous })" class="top-nav-shot-down"></a>
+			<a ng-show="shot.next" ui-sref="volume.shot({ shot: shot.next })" class="top-nav-shot-up"></a>-->
+			
+	        <div class="top-nav-shot-current">volume {{ volume | number }} &nbsp; \ &nbsp; article {{ shot.id }} &nbsp; \ &nbsp;</div>
+        
+		    <div class="top-nav-current-slide">
+		        <div class="top-nav-author down" ng-repeat="slide in shot.slides | filter:isHeaderSlide">
+		          {{ slide.nav || slide.annotation.author.name }}
+		        </div>
+		    </div>
+	    </div>
+		<div class="top-nav-index-label">Volume Index & Article Detail <span class="down-chevron">^</span></div>
     </div>
 
     <div class="nav-menu">
 		<div class="nav-menu-inner">
+			<h4>Article Detail</h4>
+			
 			<div class="nav-menu-details">
 				<div class="nav-menu-appellation">
 					<h1>{{ shot.annotations[0].title }}</h1>
 					<h3>{{ shot.annotations[0].author.name }}</h3>
 					
 					<div class="nav-menu-utilities">
-						<a href="#">Download PDF</a>
+						<a href="#" class="pdf-download"></a>
 						<a href="#">Share</a>
 						<a href="#">Notes</a>
 					</div>
@@ -45,7 +54,8 @@
 						<div class="nav-menu-shot-thumb"><img ng-src="{{ thumbnailForShot( shot ) }}" /></div>
 						<div class="nav-menu-shot-number">{{ shot.index | number }}</div>
 						<div class="nav-menu-shot-details">
-							<strong>{{ shot.title }}</strong>
+							<p><strong>{{ shot.title }}</strong></p>
+							<p>{{ shot.annotations[0].author.name }}</p>
 						</div>
 					</a>
 				</div>
