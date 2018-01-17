@@ -246,6 +246,10 @@ function ShotCtrl($scope, $sce, $filter, $timeout, $state, $stateParams, ShotSer
       });
     }
   };
+  
+  $scope.getArticleNumber = function(num) {
+	  return ShotFilter(num);
+  }
 }
 
 angular

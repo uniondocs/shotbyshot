@@ -634,10 +634,18 @@ function ScrollService(ShotVideoService) {
           }
           this.currentSlide = slide;
 
-          // If new annotation is in view, update shot video loop bounds.
+          /* If new annotation is in view, update shot video loop bounds.
           if (slide.annotation && this.currentAnnotation !== slide.annotation) {
             this.currentAnnotation = slide.annotation;
             ShotVideoService.setLoopBounds(this.currentAnnotation.timecodes);
+          }*/
+          
+          if(slide.attributes && slide.attributes.loop) {
+	          var loop = slide.attributes.loop.split(",");
+	          if(loop.length > 1) {
+		        var timecodes = {start:Number(loop[0]), end:Number(loop[1])};
+				ShotVideoService.setLoopBounds(timecodes);
+	          }
           }
         }
 

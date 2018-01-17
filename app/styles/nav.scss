@@ -22,6 +22,10 @@
   .nav-menu {
     background:rgba(204,204,204,0.8);
   }
+  
+  .top-nav-desktop {display:block;}
+  .top-nav-mobile {display:none;}
+
 
   .top-nav-current-slide, .top-nav-shot {
     transition: opacity 0.3s;
@@ -84,9 +88,8 @@
   right: 40px;
   top: 26px;
   height: 20px;
-  width: 30px;
-  background-image: url(../images/Menu_Icon.svg);
-  background-color: rgba(255, 255, 255, 0);
+  width: 20px;
+  background: url('../images/Menu_Icon.svg') no-repeat center center rgba(255,255,255,0);
   background-size: 100%;
   font-size: 20px;
   padding: 5px;
@@ -422,23 +425,33 @@
 @media only screen and (max-device-width: 736px)  { 
 	.side-nav { display:none; }
 	
-	.top-nav-shot {
-		left:20px;
-		height:30px;
-		width:30px;
-		
-		.top-nav-shot-current {
-			width:30px;
-			height:30px;
-			font-size:14px;
-			line-height:30px;	
+	.top-nav {
+		.top-nav-header { 
+			left:10px; top:15px;
+			.top-nav-index-label {font-size:14px;}
 		}
+		
+		.top-nav-desktop {display:none;}
+		.top-nav-mobile {display:block;}
+
+		.top-nav-shot {
+			left:20px;
+			height:30px;
+			width:30px;
+			
+			.top-nav-shot-current {
+				width:30px;
+				height:30px;
+				font-size:14px;
+				line-height:30px;	
+			}
+		}
+		.top-nav-current-slide { 
+			width:55%; 
+			font-size:1em;
+		}
+		.top-nav-menu-button {right:10px; top:15px;}	
 	}
-	.top-nav-current-slide { 
-		width:55%; 
-		font-size:1em;
-	}
-	.top-nav-menu-button {right:20px;}
 	
 	.nav-global {
 		font-size:28px;

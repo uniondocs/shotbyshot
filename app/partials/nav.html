@@ -9,13 +9,17 @@
 	        <!--<a ng-show="shot.previous" ui-sref="volume.shot({ shot: shot.previous })" class="top-nav-shot-down"></a>
 			<a ng-show="shot.next" ui-sref="volume.shot({ shot: shot.next })" class="top-nav-shot-up"></a>-->
 			
-	        <div class="top-nav-shot-current">volume {{ volume | number }} &nbsp; \ &nbsp; article {{ shot.id }} &nbsp; \ &nbsp;</div>
-        
-		    <div class="top-nav-current-slide">
-		        <div class="top-nav-author down" ng-repeat="slide in shot.slides | filter:isHeaderSlide">
-		          {{ slide.nav || slide.annotation.author.name }}
-		        </div>
-		    </div>
+			<div class="top-nav-desktop">
+		        <div class="top-nav-shot-current">Volume {{ volume | number }} &nbsp; \ &nbsp; Article {{ shot.id }} &nbsp; \ &nbsp;</div>
+			    <div class="top-nav-current-slide">
+			        <div class="top-nav-author down" ng-repeat="slide in shot.slides | filter:isHeaderSlide">
+			          {{ slide.nav || slide.annotation.author.name }}
+			        </div>
+			    </div>
+			</div>
+			<div class="top-nav-mobile">
+				<div class="top-nav-shot-current">{{ volume }} - {{ getArticleNumber(shot.id) }}</div>
+			</div>
 	    </div>
 		<div class="top-nav-index-label">Volume Index & Article Detail <span class="down-chevron">^</span></div>
     </div>
