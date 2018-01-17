@@ -56,13 +56,16 @@ function ShotCtrl($scope, $sce, $filter, $timeout, $state, $stateParams, ShotSer
           }
         }, AUTO_ACTION_DURATION);
       }
-
+      
       var intro = [{
         type: 'introduction',
         shot: self.id,
         title: annotations[0].title,
         authors: annotations[0].author.name,
         nav: 'introduction',
+        attributes: {
+	        loop:annotations[0].timecodes
+	    },
         onEnter: function() {
           $scope.inView = true;
           if (!self.ready) {

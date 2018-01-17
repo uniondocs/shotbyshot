@@ -91,6 +91,9 @@ function ScrollService(ShotVideoService) {
     this.navHeight = 80;
     this.slides = [];
     this.$slides = [];
+    
+    this.timecodeMap = {};
+    this.currentLoop = 0;
 
     this.headers = document.getElementsByClassName('top-nav-author');
     this.navButtons = document.getElementsByClassName('side-nav-circle');
@@ -558,8 +561,21 @@ function ScrollService(ShotVideoService) {
       if (slide.type === 'background') {
         bg = slide;
       }
+      
+      // Build timecodes map for slides with loop tag
+	  if(slide.attributes && slide.attributes.loop) {
+	  	  if(typeof slide.attributes.loop === 'string') { // parses slide loop tag into timecode object
+			var loop = slide.attributes.loop.split(",");
+			if(loop.length > 1) {
+				var timecodes = {start:Number(loop[0]), end:Number(loop[1])};
+				slide.attributes.loop = timecodes;
+			}
+	      }
+	      
+	      this.timecodeMap[slide.index] = slide.attributes.loop;
+	  }
     }, this);
-
+    
     // Force an update to the layout.
     this.lastY = undefined;
     this.reflow();
@@ -640,11 +656,19 @@ function ScrollService(ShotVideoService) {
             ShotVideoService.setLoopBounds(this.currentAnnotation.timecodes);
           }*/
           
+          // Set video loop from slide tag       
           if(slide.attributes && slide.attributes.loop) {
-	          var loop = slide.attributes.loop.split(",");
-	          if(loop.length > 1) {
-		        var timecodes = {start:Number(loop[0]), end:Number(loop[1])};
-				ShotVideoService.setLoopBounds(timecodes);
+	          ShotVideoService.setLoopBounds(slide.attributes.loop);
+			  this.currentLoop = slide.index;
+          } else {
+	          if(slide.index < this.currentLoop) {
+		      	// Scrolled up, so go back to previous loop
+		      	for(i = slide.index; i >= 0; i--) {
+			      	if(this.timecodeMap[i]) {
+				      ShotVideoService.setLoopBounds(this.timecodeMap[i]);
+					  return false;
+			      	}
+		      	}
 	          }
           }
         }
