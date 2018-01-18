@@ -1,6 +1,6 @@
 'use strict';
 
-function ScrollService(ShotVideoService) {
+function ScrollService(ShotVideoService, $stateParams) {
   /**
    * key: distance from current slide of the keyframe, in units of slides.
    *     so -1 means this keyframe starts when the current slide is one full
@@ -574,14 +574,31 @@ function ScrollService(ShotVideoService) {
 	      
 	      this.timecodeMap[slide.index] = slide.attributes.loop;
 	  }
+	  
+	  // Link footnotes
+	  var footnotes = el.querySelectorAll('.footnote');
+	  if(footnotes) {
+		footnotes.forEach(function(note) {
+			var noteIndex = note.innerHTML.replace(/{|}/g,'');
+			var path = '#'+ $stateParams.volume +'/'+ $stateParams.shot;
+			
+			if(slide.nav === "Footnotes") {
+				note.id = "source" + noteIndex;
+				note.href = path +"#ref"+ noteIndex;
+			} else {
+				note.id = "ref" + noteIndex;
+				note.href = path +"#source"+ noteIndex;				
+			}
+		});
+	  }
+	  
     }, this);
     
     // Force an update to the layout.
     this.lastY = undefined;
     this.reflow();
   };
-
-
+  
   this.currentSlide = {};
 
   this.currentAnnotation = {};
@@ -622,7 +639,7 @@ function ScrollService(ShotVideoService) {
       var beforeFirstFrame = frameIndex === 0 && slideFrame < mainKeyFrames[0].key;
       if (beforeFirstFrame) {
         if (!slide.hidden) {
-          slide.$inner.css({'display': 'none'});
+          slide.$inner.css({'visibility': 'hidden'});
           slide.hidden = true;
         }
         return;
@@ -631,7 +648,7 @@ function ScrollService(ShotVideoService) {
                            slideFrame > mainKeyFrames[numFrames - 1].key;
       if (afterLastFrame) {
         if (!slide.hidden) {
-          slide.$inner.css({'display': 'none'});
+          slide.$inner.css({'visibility': 'hidden'});
           slide.hidden = true;
         }
         return;
@@ -791,6 +808,7 @@ function ScrollService(ShotVideoService) {
           '-webkit-transform': transformCss,
           'transform': transformCss,
           'display': 'block',
+          'visibility':'visible',
           'opacity': css['opacity']
         });
 

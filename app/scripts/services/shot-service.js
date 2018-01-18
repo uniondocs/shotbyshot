@@ -6,8 +6,8 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
 
   var current = parseInt($stateParams.shot, 10);
   var currentVolumeIndex = parseInt($stateParams.volume, 10);
-
-  document.title = document.title + " - Vol " + romanize(current);
+  
+  document.title = document.title + " - Vol " + romanize(currentVolumeIndex);
     
   /**
    * Current shot number.

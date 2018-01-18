@@ -38,7 +38,10 @@
   </div>
 
   <!-- COLUMN -->
-  <div ng-if="slide.type === 'column'" class="slide-column slide-inner">
+  <div ng-if="slide.type === 'column' && slide.attributes.title === 'Footnotes'" class="slide-column slide-inner slide-footnotes">
+    <div class="slide-column-container" ng-bind-html="slide.content"></div>
+  </div>
+  <div ng-if="slide.type === 'column' && slide.attributes.title != 'Footnotes'" class="slide-column slide-inner">
     <div class="slide-column-container" ng-bind-html="slide.content"></div>
   </div>
 

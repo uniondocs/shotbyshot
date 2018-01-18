@@ -12,6 +12,10 @@ function Annotation() {
     this.title = data.title;
     this.content = data.content || '';
     
+    // Cleanup empty p tags
+    [].filter.call(document.getElementsByTagName("p"), function(elem){return elem.childElementCount==0 && elem.textContent.trim()==''})
+    .forEach(function(elem){elem.parentNode.removeChild(elem)})
+    
     // Get the Authors & Description
 	if(data.custom_fields.authors) {
 		this.author = {

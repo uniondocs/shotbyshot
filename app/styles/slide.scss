@@ -75,6 +75,15 @@
 	padding:100px 0;
 	position:relative;
 }
+.slide-column.slide-footnotes .slide-column-container {
+	column-count:2;
+	
+	& > * {
+		-webkit-column-break-inside: avoid;
+	    column-break-inside: avoid;	
+    }
+    p:first-child {margin-top:0;}
+}
 
 .slide-video-content {
   height: 100%;
@@ -129,6 +138,13 @@
 	font-family:'Arial', sans-serif;
     padding: 15px 30px;
   }
+}
+
+.footnote {
+	font-size:13px;
+	line-height:2em;
+	vertical-align:top;
+	text-decoration:none;
 }
 
 
