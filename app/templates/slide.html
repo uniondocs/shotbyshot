@@ -40,12 +40,11 @@
   <!-- COLUMN -->
   <div ng-if="slide.type === 'column' && slide.attributes.title === 'Footnotes'" class="slide-column slide-inner slide-footnotes">
     <div class="slide-column-container" ng-bind-html="slide.content"></div>
-    <div class="column-bg"></div>
   </div>
   <div ng-if="slide.type === 'column' && slide.attributes.title != 'Footnotes'" class="slide-column slide-inner">
     <div class="slide-column-container" ng-bind-html="slide.content"></div>
-    <div class="column-bg"></div>
   </div>
+  <div ng-if="slide.type === 'column'" class="column-nav-bg"></div>
 
   <!-- BACKGROUND -->
   <div ng-if="slide.type === 'background'" class="slide-background slide-inner">
@@ -114,4 +113,5 @@
   <!-- TODO(dbow): Add audio support -->
 
 </div>
+
 

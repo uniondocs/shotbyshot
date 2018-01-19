@@ -6,7 +6,7 @@
   left: 0px;
   right: 0px;
   bottom:0;
-  height:80px;
+  height:60px;
   color: #FFF;
   z-index: 5;
   transition: height 0.1s 0.1s, opacity 0.3s ease-in-out;
@@ -117,8 +117,7 @@
 
 .top-nav-header {
   position:absolute;
-  margin-top:20px;
-  margin-left:30px;
+  padding:20px 30px 10px 30px;
   height:30px;
   width:92%;
   text-decoration: none;
@@ -174,7 +173,7 @@
 	opacity: 0;
 	font-size:18px;
 	position:absolute;
-	left:80px;
+	left:110px;
 	
 	.down-chevron {
 		display:inline-block;

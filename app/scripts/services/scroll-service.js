@@ -302,7 +302,34 @@ function ScrollService(ShotVideoService, $stateParams) {
       },
     },
     'text': KeyFrameSets.fadeInFromBottom,
-    'column': KeyFrameSets.fadeInFromBottom,
+    'column': [
+      {
+        key: -1,
+        opacity: 0,
+        top: 1
+      },
+      {
+        key: -0.5,
+        opacity: 0,
+        top: 0.5,
+        ease: 'out'
+      },
+      {
+        key: 0,
+        opacity: 1,
+        top: 0
+      },
+      {
+        key: 1,
+        opacity: 1,
+        top: 0
+      },
+      {
+        key: 2,
+        opacity: 0,
+        top: 0
+      }
+    ],
     'highlight': KeyFrameSets.highlightStart,
     'photo': KeyFrameSets.slideInFromBottom,
     'streetview': KeyFrameSets.slideInFromBottom,
@@ -471,19 +498,16 @@ function ScrollService(ShotVideoService, $stateParams) {
       }
       
       // Dynamically set height and final keyFrame for Column slide
-      if(slide.type === 'column') {
-		  var lastIndex = slide.keyFrames.length - 1;
-		  var lastKey = slide.keyFrames[lastIndex];
-		  var columnHeight = slide.$el[0].offsetHeight;
+      if(slide.type === 'column') {	
+	      var columnHeight = slide.$el[0].offsetHeight;
 		  var columnWidth = Number(window.getComputedStyle(slide.$container[0]).getPropertyValue('width').replace("px",""));
 		  var bottomBuffer = 150;
-		  		  
+		  
 		  // calculate dynamic image heights and adjust columnHeight
 		  var imgs = slide.$el[0].querySelectorAll('img');
 		  imgs.forEach(function(img) {	
 			  if(img.width > 0) {
 			  	var imgResizePercent = columnWidth/img.width;
-			  	columnHeight = (columnHeight - img.height) + img.height * imgResizePercent;
 			  } else {
 				img.parentNode.removeChild(img); // no height information
 			  }
@@ -492,12 +516,26 @@ function ScrollService(ShotVideoService, $stateParams) {
 				  'height':'auto'
 			  });
 		  });
-	  
-		  lastKey['key'] = columnHeight/screenHeight;
-		  lastKey['opacity'] = 1;
 		  		  
-		  slide.keyFrames[lastIndex] = lastKey;
-		  slide.$el.css('height', columnHeight + bottomBuffer +'px'); 
+		  window.setTimeout(function () {
+			  columnHeight = slide.$el[0].offsetHeight;
+
+			  var lastIndex = slide.keyFrames.length - 1;
+			  var fadeKey = slide.keyFrames[lastIndex - 1];
+			  var lastKey = slide.keyFrames[lastIndex];
+			  
+			  /*fadeKey['key'] = columnHeight/screenHeight - 1;
+			  fadeKey['opacity'] = 1;
+			  lastKey['key'] = columnHeight/screenHeight;
+			  lastKey['opacity'] = 0;*/
+			  lastKey['key'] = columnHeight/screenHeight;
+			  lastKey['opacity'] = 1; 
+			  		  
+			  slide.keyFrames[lastIndex - 1] = fadeKey;
+			  slide.keyFrames[lastIndex] = lastKey;
+
+		  	  slide.$el.css('height', columnHeight +'px'); 
+		  }, 2000);
       }
 
       if (slide.isHeader || slide.type === 'author') {
@@ -671,7 +709,7 @@ function ScrollService(ShotVideoService, $stateParams) {
           }
           this.currentSlide = slide;
 
-          /* If new annotation is in view, update shot video loop bounds.
+          /* If new annotation is in view, update shot video loop bounds from Annotations Meta.
           if (slide.annotation && this.currentAnnotation !== slide.annotation) {
             this.currentAnnotation = slide.annotation;
             ShotVideoService.setLoopBounds(this.currentAnnotation.timecodes);
@@ -815,6 +853,21 @@ function ScrollService(ShotVideoService, $stateParams) {
           'visibility':'visible',
           'opacity': css['opacity']
         });
+        
+        // Turn on nav background for column slide
+        if(slide.type === "column") {
+	       	if(!slideContainer) { 
+		       var slideContainer = slide.$container[0]; 
+		       var containerBottomPad = parseInt(window.getComputedStyle(slideContainer).getPropertyValue('padding-bottom'),10);
+		       var slideNavBg = slide.$el[0].getElementsByClassName('column-nav-bg')[0];
+		    }
+	       	
+	    	if(slideContainer.getBoundingClientRect().top < 0 && slideContainer.getBoundingClientRect().top + path.$el[0].clientHeight > containerBottomPad) {
+		    	slideNavBg.style.opacity = css['opacity'];
+	    	} else {
+		    	slideNavBg.style.opacity = 0;
+	    	}
+        }
 
         if (css['metaOpacity'] !== undefined) {
           slide.$meta.css({
