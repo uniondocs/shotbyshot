@@ -21,7 +21,7 @@
       <!--<h3>End</h3>
       <div class="slide-shot-number">{{ slide.shot }}</div>-->
       <div class="slide-outro-actions">
-	    <a class="slide-outro-action" href="#">Volume Index</a>
+	    <a class="slide-outro-action" href="https://worldrecordsjournal.org/volumes/" target="_blank">Volume Index</a>
         <a class="slide-outro-action" ng-show="slide.next" ui-sref="volume.shot({shot: slide.next})">Next Article</a>
       </div>
     </div>
@@ -40,9 +40,11 @@
   <!-- COLUMN -->
   <div ng-if="slide.type === 'column' && slide.attributes.title === 'Footnotes'" class="slide-column slide-inner slide-footnotes">
     <div class="slide-column-container" ng-bind-html="slide.content"></div>
+    <div class="column-bg"></div>
   </div>
   <div ng-if="slide.type === 'column' && slide.attributes.title != 'Footnotes'" class="slide-column slide-inner">
     <div class="slide-column-container" ng-bind-html="slide.content"></div>
+    <div class="column-bg"></div>
   </div>
 
   <!-- BACKGROUND -->

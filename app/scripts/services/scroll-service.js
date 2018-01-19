@@ -585,6 +585,10 @@ function ScrollService(ShotVideoService, $stateParams) {
 			if(slide.nav === "Footnotes") {
 				note.id = "source" + noteIndex;
 				note.href = path +"#ref"+ noteIndex;
+				
+				// Cleanup empty p tags
+				[].filter.call(document.getElementsByTagName("p"), function(elem){return elem.childElementCount==0 && elem.textContent.trim()==''})
+				.forEach(function(elem){elem.parentNode.removeChild(elem)})
 			} else {
 				note.id = "ref" + noteIndex;
 				note.href = path +"#source"+ noteIndex;				
