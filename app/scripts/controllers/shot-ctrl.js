@@ -253,6 +253,57 @@ function ShotCtrl($scope, $sce, $filter, $timeout, $state, $stateParams, ShotSer
   $scope.getArticleNumber = function(num) {
 	  return ShotFilter(num);
   }
+  
+  // Share Link copy to clipboard
+  function shareLink() {
+	  var clipboard = new Clipboard('.share-link', {
+	    text: function(trigger) {
+	        return trigger.href;
+	    }
+	  });
+	  
+	  var tooltip = document.createElement("div");
+	  tooltip.className = "tooltip";
+	  
+	  clipboard.on('success', function(e) {
+		var button = e.trigger;
+		tooltip.innerHTML = "Share Link copied to Clipboard";
+		
+		button.appendChild(tooltip);
+		
+		setTimeout(function(){ tooltip.remove(); }, 3000);	
+	    e.clearSelection();
+	  });
+	  clipboard.on('error', function(e) {
+		var button = e.trigger;
+		tooltip.innerHTML = "Share Link could not be Copied";
+		
+		button.appendChild(tooltip);
+		
+		setTimeout(function(){ tooltip.remove(); }, 3000);	
+	    e.clearSelection();
+	  });  
+  }
+  shareLink();
+  
+  // Auto-expand Volume Index with URL param ?index=1
+  expandVolumeIndex();
+  function expandVolumeIndex() {
+  	if(getParameterByName('index') === "1") {
+  		$scope.menuIsOn = true;
+  		angular.element(document.body).addClass('noscroll');
+  	}
+  }
+  // HELPER: Get params from URL
+  function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+  }
 }
 
 angular

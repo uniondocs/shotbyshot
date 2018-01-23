@@ -34,9 +34,8 @@
 					<h3>{{ shot.annotations[0].author.name }}</h3>
 					
 					<div class="nav-menu-utilities">
-						<a href="#" class="pdf-download"></a>
-						<a href="#">Share</a>
-						<a href="#">Notes</a>
+						<a href="{{ shot.annotations[0].pdf }}" target="_blank">PDF Download</a>
+						<a href="#/volume/{{volume}}/{{ getArticleNumber(shot.id) }}?index=1" class="share-link">Share</a>
 					</div>
 				</div>
 				<div class="nav-menu-description">
@@ -65,6 +64,8 @@
 				</div>
 			</div>
 			
+			<div class="nav-volume-credits" ng-bind-html="currentVolume.description"></div>
+
 			<div class="nav-menu-tags" ng-show="showMenuTab === 'tags'">
 				<div class="nav-menu-scrollable">
 					<a class="nav-menu-tag" ng-repeat="tag in shot.tags" ng-bind-html="tag.title" ng-click="$parent.filterShots(tag); $parent.showMenuTab = 'shots';"></a>

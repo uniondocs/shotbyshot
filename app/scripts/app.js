@@ -7,7 +7,7 @@ angular
     $stateProvider
       .state('volume', {
         template: '<ui-view/>',
-        url: '/:volume',
+        url: '/volume/:volume',
         abstract: true,
         controller: function($scope, $stateParams) {
           $scope.volume = $stateParams.volume;
@@ -20,7 +20,7 @@ angular
         controllerAs: 'shot'
       });
 
-    $urlRouterProvider.otherwise('/01/01');
+    $urlRouterProvider.otherwise('/volume/01/01');
 
      $sceDelegateProvider.resourceUrlWhitelist([
        // Allow same origin resource loads.

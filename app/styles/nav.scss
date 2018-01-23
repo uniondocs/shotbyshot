@@ -274,13 +274,13 @@
     height: 8px;
     width: 8px;
     list-style: none;
-    background-color: rgba(216, 216, 216, 0.4);
+    background-color: #fff;
     margin: 15px;
     border-radius: 8px;
     cursor: pointer;
 
     &.highlighted {
-      background-color: white;
+      background-color: #f8dd29;
       cursor: default;
     }
 

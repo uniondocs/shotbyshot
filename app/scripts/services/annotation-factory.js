@@ -27,6 +27,10 @@ function Annotation() {
 	    };
 	}
 	
+	if(data.custom_fields.pdf_download) {
+		this.pdf = data.custom_fields.pdf_download[0]
+	}
+		
     // Parse custom fields (street view, timecodes, and highlight).
     var customFields = data.custom_fields;
 

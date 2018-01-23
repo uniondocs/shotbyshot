@@ -112,6 +112,11 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
           // TODO(dbow): Remove this filter when only volume categories are
           // present in the API.
           if (category.slug.length === 2) {
+	        // Wraps the Volume description in paragraphs for output into columns
+	        if(category.description) {
+		        var description = category.description.split("[column]");
+				category.description = '<p>' + description.join('</p><p>') + '</p>';
+	        }	        
             volumes.push(category);
             // Store post count by volume to update the max shot value.
             articleCountByVolume[parseInt(category.slug, 10)] = category.post_count;
