@@ -23,6 +23,7 @@ function SlideManager($timeout, ScrollService) {
           // End loading 100ms after setting slides to avoid flicker of slide content.
           $timeout(function() {
             $scope.loading = false;
+            $scope.scope = $scope.$parent;
           }, 100);
         });
       });

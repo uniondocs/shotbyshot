@@ -254,11 +254,18 @@ function ShotCtrl($scope, $sce, $filter, $timeout, $state, $stateParams, ShotSer
 	  return ShotFilter(num);
   }
   
+  $scope.closeMenuIfCurrent = function(shot) {
+	  if(shot.index === $stateParams.shot) {
+		  $scope.menuIsOn = false;
+		  angular.element(document.body).removeClass('noscroll');
+	  }
+  }
+    
   // Share Link copy to clipboard
   function shareLink() {
 	  var clipboard = new Clipboard('.share-link', {
 	    text: function(trigger) {
-	        return trigger.href;
+	        return window.location.href + '?index=1';
 	    }
 	  });
 	  

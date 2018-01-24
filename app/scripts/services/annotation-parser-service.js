@@ -179,7 +179,11 @@ function AnnotationParserService($sce, $rootScope, Annotation) {
           streetview: 'Then & Now'
         };
 
-        slideObject.nav = attributeMap.title.replace(/\\/ ,String.fromCharCode(160,32,92,32,160)) || NON_AUTHOR_TYPES[type]; // .fromCharCode(160,32,92,32,160) is (&nbps; + space + \ + space + &nbsp;)
+		if(attributeMap.title) {
+			slideObject.nav = attributeMap.title.replace(/<[^>]+>/g, '').replace(/\\/ ,String.fromCharCode(160,32,92,32,160)); // .fromCharCode(160,32,92,32,160) is (&nbps; + space + \ + space + &nbsp;)
+		} else {
+			slideObject.nav = NON_AUTHOR_TYPES[type]; 
+        }
 
         if (type === 'video') {
           // Add callbacks that broadcast video events on enter and exit,

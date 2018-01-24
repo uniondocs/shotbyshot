@@ -218,7 +218,12 @@ function ScrollService(ShotVideoService, $stateParams) {
       {
         key: 1,
         top: 0,
+        opacity: 1,
         metaOpacity: 0
+      },
+      {
+        key: 1.5,
+        opacity: 0
       }
     ],
     'bg-video': [
@@ -618,9 +623,9 @@ function ScrollService(ShotVideoService, $stateParams) {
 	  if(footnotes) {
 		footnotes.forEach(function(note) {
 			var noteIndex = note.innerHTML.replace(/{|}/g,'');
-			var path = '#'+ $stateParams.volume +'/'+ $stateParams.shot;
+			var path = '#/volume/'+ $stateParams.volume +'/'+ $stateParams.shot;
 			
-			if(slide.nav === "Footnotes") {
+			if(slide.nav === "Endnotes") {
 				note.id = "source" + noteIndex;
 				note.href = path +"#ref"+ noteIndex;
 				

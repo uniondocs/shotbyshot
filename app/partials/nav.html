@@ -13,7 +13,7 @@
 		        <div class="top-nav-shot-current">Volume {{ volume | number }} &nbsp; \ &nbsp; Article {{ shot.id }} &nbsp; \ &nbsp;</div>
 			    <div class="top-nav-current-slide">
 			        <div class="top-nav-author down" ng-repeat="slide in shot.slides | filter:isHeaderSlide">
-			          {{ slide.nav || slide.annotation.author.name }}
+			          {{ slide.nav || slide.annotation.author.name | htmlToPlaintext }}
 			        </div>
 			    </div>
 			</div>
@@ -35,7 +35,7 @@
 					
 					<div class="nav-menu-utilities">
 						<a href="{{ shot.annotations[0].pdf }}" target="_blank">PDF Download</a>
-						<a href="#/volume/{{volume}}/{{ getArticleNumber(shot.id) }}?index=1" class="share-link">Share</a>
+						<a href="javascript:void(0)" class="share-link">Share</a>
 					</div>
 				</div>
 				<div class="nav-menu-description">
@@ -53,7 +53,7 @@
 				<h4>{{ currentVolume.title }}</h4>
 				
 				<div class="nav-menu-scrollable">
-					<a class="nav-menu-shot" ng-repeat="shot in shots | orderBy:'slug'" href="#/volume/{{volume}}/{{shot.index}}">
+					<a class="nav-menu-shot" ng-repeat="shot in shots | orderBy:'slug'" href="#/volume/{{volume}}/{{shot.index}}" ng-click="closeMenuIfCurrent(shot)">
 						<div class="nav-menu-shot-thumb"><img ng-src="{{ thumbnailForShot( shot ) }}" /></div>
 						<div class="nav-menu-shot-number">{{ shot.index | number }}</div>
 						<div class="nav-menu-shot-details">

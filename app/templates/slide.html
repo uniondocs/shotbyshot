@@ -8,8 +8,8 @@
 		  <h4>{{ slide.volume.title }}</h4>
 		</div>
 	    <div class="intro-title">
-	      <h3>{{ slide.title }}</h3>
-	      <h4>{{ slide.authors }}</h4>
+	      <h3 ng-bind-html="slide.title"></h3>
+	      <h4 ng-bind-html="slide.authors"></h4>
 	    </div>
 	  </div>
     <div class="slide-scroll-indicator"></div>
@@ -21,7 +21,7 @@
       <!--<h3>End</h3>
       <div class="slide-shot-number">{{ slide.shot }}</div>-->
       <div class="slide-outro-actions">
-	    <a class="slide-outro-action" href="https://worldrecordsjournal.org/volumes/" target="_blank">Volume Index</a>
+	    <a class="slide-outro-action" ng-click="scope.toggleMenu()">Volume Index</a>
         <a class="slide-outro-action" ng-show="slide.next" ui-sref="volume.shot({shot: slide.next})">Next Article</a>
       </div>
     </div>
@@ -38,10 +38,10 @@
   </div>
 
   <!-- COLUMN -->
-  <div ng-if="slide.type === 'column' && slide.attributes.title === 'Footnotes'" class="slide-column slide-inner slide-footnotes">
+  <div ng-if="slide.type === 'column' && slide.attributes.title === 'Endnotes'" class="slide-column slide-inner slide-footnotes">
     <div class="slide-column-container" ng-bind-html="slide.content"></div>
   </div>
-  <div ng-if="slide.type === 'column' && slide.attributes.title != 'Footnotes'" class="slide-column slide-inner">
+  <div ng-if="slide.type === 'column' && slide.attributes.title != 'Endnotes'" class="slide-column slide-inner">
     <div class="slide-column-container" ng-bind-html="slide.content"></div>
   </div>
   <div ng-if="slide.type === 'column'" class="column-nav-bg"></div>
@@ -51,7 +51,7 @@
     <img ng-if="slide.attributes.background" ng-src="{{ slide.attributes.background }}" class="background-cover-directive" />
     <div ng-if="!slide.attributes.background" ng-bind-html="slide.content" class="background-cover-directive"></div>
     <div class="meta-text" ng-if="slide.attributes.caption">
-      <div class="meta-caption">{{ slide.attributes.caption }}</div>
+      <div class="meta-caption" ng-bind-html="slide.attributes.caption"></div>
     </div>
   </div>
 
@@ -60,7 +60,7 @@
     <img ng-if="slide.attributes.photo" ng-src="{{ slide.attributes.photo }}" class="fit-to-window-directive" />
     <div ng-if="!slide.attributes.photo" ng-bind-html="slide.content" class="fit-to-window-directive"></div>
     <div class="meta-text" ng-if="slide.attributes.caption">
-      <div class="meta-caption">{{ slide.attributes.caption }}</div>
+      <div class="meta-caption" ng-bind-html="slide.attributes.caption"></div>
     </div>
   </div>
 
@@ -69,7 +69,7 @@
     <div class="slide-highlight-spotlight"></div>
     <div class="meta-text" ng-if="slide.attributes.title || slide.attributes.caption">
       <div ng-if="slide.attributes.title">{{ slide.attributes.title }}</div>
-      <div ng-if="slide.attributes.caption">{{ slide.attributes.caption }}</div>
+      <div ng-if="slide.attributes.caption" ng-bind-html="slide.attributes.caption"></div>
     </div>
   </div>
 
@@ -87,7 +87,7 @@
     <div class="slide-video-content" ng-if="!slide.attributes.video" ng-bind-html="slide.content">
     </div>
     <div class="meta-text" ng-if="slide.attributes.caption">
-      <div class="meta-caption">{{ slide.attributes.caption }}</div>
+      <div class="meta-caption" ng-bind-html="slide.attributes.caption"></div>
     </div>
   </div>
 
