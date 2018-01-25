@@ -19,8 +19,6 @@ angular
         controller: 'ShotCtrl',
         controllerAs: 'shot'
       });
-	$locationProvider.html5Mode(true);
-
     $urlRouterProvider.otherwise('/volume/01/01');
     
      $sceDelegateProvider.resourceUrlWhitelist([
