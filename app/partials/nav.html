@@ -53,7 +53,7 @@
 				<h4>{{ currentVolume.title }}</h4>
 				
 				<div class="nav-menu-scrollable">
-					<a class="nav-menu-shot" ng-repeat="shot in shots | orderBy:'slug'" href="#/volume/{{volume}}/{{shot.index}}" ng-click="closeMenuIfCurrent(shot)">
+					<a class="nav-menu-shot" ng-repeat="shot in shots | orderBy:'slug'" href="#/{{volume}}/{{shot.index}}" ng-click="closeMenuIfCurrent(shot)">
 						<div class="nav-menu-shot-thumb"><img ng-src="{{ thumbnailForShot( shot ) }}" /></div>
 						<div class="nav-menu-shot-number">{{ shot.index | number }}</div>
 						<div class="nav-menu-shot-details">

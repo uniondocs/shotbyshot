@@ -7,7 +7,7 @@ angular
     $stateProvider
       .state('volume', {
         template: '<ui-view/>',
-        url: '/volume/:volume',
+        url: '/:volume',
         abstract: true,
         controller: function($scope, $stateParams) {
           $scope.volume = $stateParams.volume;
@@ -19,13 +19,12 @@ angular
         controller: 'ShotCtrl',
         controllerAs: 'shot'
       });
-    $urlRouterProvider.otherwise('/volume/01/01');
+    $urlRouterProvider.otherwise('/01/01');
     
      $sceDelegateProvider.resourceUrlWhitelist([
        // Allow same origin resource loads.
        'self',
        // Allow wordpress uploads.
-       'https://vols.worldrecordsjournal.org/',
        'https://worldrecordsjournal.org/wp/wp-content/uploads/**',
        'https://s3.amazonaws.com/world-records-journal/**',
        'https://s3.amazonaws.com/world-records-journal/',
