@@ -30,8 +30,8 @@
 			
 			<div class="nav-menu-details">
 				<div class="nav-menu-appellation">
-					<h1>{{ shot.annotations[0].title }}</h1>
-					<h3>{{ shot.annotations[0].author.name }}</h3>
+					<h1 ng-bind-html="shot.annotations[0].title"></h1>
+					<h3 ng-bind-html="shot.annotations[0].author.name"></h3>
 					
 					<div class="nav-menu-utilities">
 						<a href="{{ shot.annotations[0].pdf }}" target="_blank">PDF Download</a>
@@ -57,8 +57,8 @@
 						<div class="nav-menu-shot-thumb"><img ng-src="{{ thumbnailForShot( shot ) }}" /></div>
 						<div class="nav-menu-shot-number">{{ shot.index | number }}</div>
 						<div class="nav-menu-shot-details">
-							<p><strong>{{ shot.title }}</strong></p>
-							<p>{{ shot.annotations[0].author.name }}</p>
+							<p><strong ng-bind-html="shot.title"></strong></p>
+							<p ng-bind-html="shot.annotations[0].author.name"></p>
 						</div>
 					</a>
 				</div>
