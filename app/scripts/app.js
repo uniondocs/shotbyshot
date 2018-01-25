@@ -25,6 +25,7 @@ angular
        // Allow same origin resource loads.
        'self',
        // Allow wordpress uploads.
+       'https://vols.worldrecordsjournal.org/',
        'https://worldrecordsjournal.org/wp/wp-content/uploads/**',
        'https://s3.amazonaws.com/world-records-journal/**',
        'https://s3.amazonaws.com/world-records-journal/',
