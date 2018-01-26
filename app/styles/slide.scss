@@ -49,7 +49,7 @@
 .slide-outer-column {
 	height:auto;
 	position:relative;
-	margin-bottom:450px;
+	padding-bottom:450px;
 	
 	.column-nav-bg {
 		position: fixed;
@@ -71,6 +71,10 @@
 	p {
 		color:#222020;
 		img {padding:15px 0;}
+	}
+	img {
+		width:100%;
+		height:auto;
 	}
 	figure {
 		margin:0 auto;

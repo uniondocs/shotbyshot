@@ -393,12 +393,28 @@ function ScrollService(ShotVideoService, $stateParams) {
 
   this.setSlides = function (slides) {
     this.slides = slides;
-
+    
     var self = this;
     window.setTimeout(function () {
       self.$slides = self.$el[0].getElementsByClassName('slide');
       self.sizeAndPosition();
     }, 100);
+    
+    // Wait for all images to load, then sizeAndPosition again to re-evaluate dynamic image sizing in columns
+    var imgs = document.images;
+    var len = imgs.length;
+    var counter = 0;
+
+	[].forEach.call( imgs, function( img ) {
+	    img.addEventListener( 'load', incrementCounter, false );
+	} );
+	
+	function incrementCounter() {
+	    counter++;
+	    if ( counter === len ) {
+	        self.sizeAndPosition();
+	    }
+	}
   };
 
 
@@ -408,6 +424,7 @@ function ScrollService(ShotVideoService, $stateParams) {
 
 
   this.sizeAndPosition = function () {
+	var self = this;
 	var screenHeight =  window.innerHeight;
 	
     this.height = screenHeight;
@@ -502,45 +519,23 @@ function ScrollService(ShotVideoService, $stateParams) {
         //     based on the % (i.e. detect if it's likely to run off the page).
       }
       
-      // Dynamically set height and final keyFrame for Column slide
+      // Dynamically set final keyFrame for Column slide
       if(slide.type === 'column') {	
-	      var columnHeight = slide.$el[0].offsetHeight;
-		  var columnWidth = Number(window.getComputedStyle(slide.$container[0]).getPropertyValue('width').replace("px",""));
-		  var bottomBuffer = 150;
+		  var columnHeight = slide.$el[0].offsetHeight;
+
+		  var lastIndex = slide.keyFrames.length - 1;
+		  var fadeKey = slide.keyFrames[lastIndex - 1];
+		  var lastKey = slide.keyFrames[lastIndex];
 		  
-		  // calculate dynamic image heights and adjust columnHeight
-		  var imgs = slide.$el[0].querySelectorAll('img');
-		  imgs.forEach(function(img) {	
-			  if(img.width > 0) {
-			  	var imgResizePercent = columnWidth/img.width;
-			  } else {
-				img.parentNode.removeChild(img); // no height information
-			  }
-			  angular.element(img).css({
-				  'width':'100%',
-				  'height':'auto'
-			  });
-		  });
+		  /*fadeKey['key'] = columnHeight/screenHeight - 1;
+		  fadeKey['opacity'] = 1;
+		  lastKey['key'] = columnHeight/screenHeight;
+		  lastKey['opacity'] = 0;*/
+		  lastKey['key'] = columnHeight/screenHeight;
+		  lastKey['opacity'] = 1; 
 		  		  
-		  window.setTimeout(function () {
-			  columnHeight = slide.$el[0].offsetHeight;
-
-			  var lastIndex = slide.keyFrames.length - 1;
-			  var fadeKey = slide.keyFrames[lastIndex - 1];
-			  var lastKey = slide.keyFrames[lastIndex];
-			  
-			  /*fadeKey['key'] = columnHeight/screenHeight - 1;
-			  fadeKey['opacity'] = 1;
-			  lastKey['key'] = columnHeight/screenHeight;
-			  lastKey['opacity'] = 0;*/
-			  lastKey['key'] = columnHeight/screenHeight;
-			  lastKey['opacity'] = 1; 
-			  		  
-			  slide.keyFrames[lastIndex - 1] = fadeKey;
-			  slide.keyFrames[lastIndex] = lastKey;
-
-		  	  slide.$el.css('height', columnHeight +'px'); 
-		  }, 2000);
+		  slide.keyFrames[lastIndex - 1] = fadeKey;
+		  slide.keyFrames[lastIndex] = lastKey;
       }
 
       if (slide.isHeader || slide.type === 'author') {
