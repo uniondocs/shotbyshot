@@ -623,7 +623,7 @@ function ScrollService(ShotVideoService, $stateParams) {
 	  if(footnotes) {
 		footnotes.forEach(function(note) {
 			var noteIndex = note.innerHTML.replace(/{|}/g,'');
-			var path = '#/volume/'+ $stateParams.volume +'/'+ $stateParams.shot;
+			var path = '#/'+ $stateParams.volume +'/'+ $stateParams.shot;
 			
 			if(slide.nav === "Endnotes") {
 				note.id = "source" + noteIndex;
