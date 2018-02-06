@@ -5,7 +5,7 @@
 
         <div class="shot-background" ng-style="{'opacity': shot.backgroundOpacity}"></div>
 
-        <video class="shot-video-directive" crossorigin autoplay loop muted>
+        <video class="shot-video-directive" crossorigin autoplay loop muted playsinline>
             <source ng-src="{{ shot.videoUrl }}" type="video/mp4">
             <source ng-src="{{ shot.videoUrl | webm }}" type="video/webm">
             Your browser does not support the <code>video</code> element.

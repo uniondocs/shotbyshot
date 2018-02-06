@@ -258,6 +258,8 @@ function ShotCtrl($scope, $sce, $filter, $timeout, $state, $stateParams, ShotSer
 	  if(shot.index === $stateParams.shot) {
 		  $scope.menuIsOn = false;
 		  angular.element(document.body).removeClass('noscroll');
+	  } else {
+		  console.log("clicked");
 	  }
   }
     
