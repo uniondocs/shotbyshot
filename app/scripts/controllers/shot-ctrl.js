@@ -255,8 +255,6 @@ function ShotCtrl($scope, $sce, $filter, $timeout, $state, $stateParams, ShotSer
   }
   
   $scope.closeMenuIfCurrent = function(shot) {
-	  console.log(shot);
-
 	  if(shot.index === $stateParams.shot) {
 		  $scope.menuIsOn = false;
 		  angular.element(document.body).removeClass('noscroll');
