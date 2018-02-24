@@ -16,12 +16,13 @@ var directory = 'dist';
 
   var app = express();
   var apiProxy = httpProxy.createProxyServer();
-
+  
   // haha
   var cache = {};
-
+      
   app.get('/wp/*', function(req, res){
     req.url = req.url.replace('/wp', '');
+
     /* Try to return cached JSON.
     if (cache[req.url] && cache[req.url].body) {
       console.log('CACHED RESPONSE: ' + req.url);

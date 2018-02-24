@@ -21,7 +21,7 @@
 
 .slide-center {
   position: absolute;
-  top: 45%;
+  top: 50%;
   left:50%;
   width:40%;
   transform: translate(-50%, -50%);
@@ -95,6 +95,12 @@
 	margin-left:25%;
 	padding:100px 0;
 	position:relative;
+	
+	@media only screen and (max-device-width: 768px)  { 
+		width:80%;
+		margin-left:12.5%;
+	}
+
 }
 .slide-column.slide-footnotes .slide-column-container {
 	column-count:2;
@@ -313,6 +319,15 @@
 	  &.intro-splash h4 {margin:10px 0; font-weight:normal;}
 	  
 	  &.intro-title { opacity:0; }
+  }
+  
+  .slide-center {
+	  width:70%;
+	  max-width:800px;
+	  
+	  @media only screen and (max-device-width: 420px)  { 
+		  font-size:0.85em;
+	  }
   }
 }
 
