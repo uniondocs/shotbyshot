@@ -141,12 +141,16 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
   this.getVolumeShots = function() {
     var deferred = $q.defer();
     var self = this;
+    
+    console.log($stateParams.volume);
 
     $http({
       method: 'GET',
-      url: '/wp/?json=get_category_posts&category_slug='+$stateParams.volume
+      url: '/wp/?json=get_category_posts&count=-1&status=publish&category_slug='+$stateParams.volume
     }).success(function(data) {
       if (data.status === 'ok') {
+	      
+	      console.log(data);
 	      
 	    data.posts.forEach(function(post) {
 		   var indexes = post.slug.split("-");
