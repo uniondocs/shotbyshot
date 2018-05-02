@@ -33,5 +33,15 @@ angular
        'http://cf.lossur.es/**',
        'http://d16hdktz6rtx08.cloudfront.net/**'
      ]);
-  });
+  }).run($run);
+  
+  $run.$inject = ['$rootScope', '$location', '$window'];
+  function $run($rootScope, $location, $window) {
+	var dataLayer = $window.dataLayer = $window.dataLayer || [];
+	var routeChange = new Event('routeChange');
+		
+	$rootScope.$on('$stateChangeSuccess', function() {
+		document.dispatchEvent(routeChange);
+	});
+  }
 

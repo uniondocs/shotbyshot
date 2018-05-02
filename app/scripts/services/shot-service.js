@@ -1,7 +1,7 @@
 'use strict';
 
 function ShotService($rootScope, $http, $filter, $stateParams, $q,
-                     AnnotationsService) {
+                     AnnotationsService, ScrollService) {
   var self = this;
 
   var current = parseInt($stateParams.shot, 10);
@@ -36,7 +36,8 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
    * Max number of articles in a volume.
    */
   var max = 100;
-
+  
+  
   /**
    * Get the next shot, if there is one.
    * @return {number|null} The next shot, or null if there is none.
@@ -68,7 +69,7 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
    * @return {Promise} promise object that will be resolved with the shot
    *     data, either from cache or from server.
    */
-  this.getShot = function(opt_id) {
+  this.getShot = function(opt_id) {  
     var deferred = $q.defer();
     var id = (typeof opt_id === 'number' && !isNaN(opt_id)) ? opt_id :
         this.current;
@@ -79,7 +80,7 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
       deferred.resolve(this.cache[id]);
       return deferred.promise;
     }
-
+    
     var url = urlBase + id;
     $http({
         method: 'GET',
@@ -94,7 +95,6 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
   };
 
   var articleCountByVolume = {};
-  
   
   // Get all volumes
   this.getVolumes = function() {
@@ -142,16 +142,12 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
     var deferred = $q.defer();
     var self = this;
     
-    console.log($stateParams.volume);
-
     $http({
       method: 'GET',
       url: '/wp/?json=get_category_posts&count=-1&status=publish&category_slug='+$stateParams.volume
     }).success(function(data) {
       if (data.status === 'ok') {
-	      
-	      console.log(data);
-	      
+	      	      
 	    data.posts.forEach(function(post) {
 		   var indexes = post.slug.split("-");
 		   

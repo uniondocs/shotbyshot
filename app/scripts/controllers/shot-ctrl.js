@@ -14,14 +14,15 @@ function ShotCtrl($scope, $sce, $filter, $timeout, $state, $stateParams, ShotSer
   this.currentVolume = null;
   this.thumbsForTag = {};  
   
-  AnalyticsService.pageview(window.location.href,
-      document.title + ' - Shot ' + this.id);
+  AnalyticsService.pageview(window.location.href, 
+  	document.title);
 
   $scope.menuIsOn = false;
   $scope.showMenuTab = 'shots';
 
   angular.element(document.body).removeClass('noscroll');
-
+   
+  
   // Duration to wait before auto-play and moving to the next shot at end.
   var AUTO_ACTION_DURATION = 30 * 1000;
   this.played = false;
@@ -56,7 +57,7 @@ function ShotCtrl($scope, $sce, $filter, $timeout, $state, $stateParams, ShotSer
           }
         }, AUTO_ACTION_DURATION);
       }
-      
+            
       var intro = [{
         type: 'introduction',
         shot: self.id,
@@ -114,7 +115,7 @@ function ShotCtrl($scope, $sce, $filter, $timeout, $state, $stateParams, ShotSer
       });
     });
   }
-  
+  	  
   function fadeIntroSplash() {
     var splash = document.querySelector('.intro-splash');
     splash.style.opacity = 0;
@@ -210,22 +211,24 @@ function ShotCtrl($scope, $sce, $filter, $timeout, $state, $stateParams, ShotSer
   }
     
   $scope.toggleMenu = function () {
-    if ($scope.menuIsOn) {
+    if ($scope.menuIsOn) { // Close
       ShotVideoService.resumeLoop();
       angular.element(document.body).removeClass('noscroll');
-    } else {
+    } else { // Open
       ShotVideoService.pause();
+      AnalyticsService.buttonClick("Navigation Opened");
       angular.element(document.body).addClass('noscroll');
     }
     $scope.menuIsOn = !$scope.menuIsOn;
   };
 
   $scope.toggleGlobalMenu = function () {
-    if ($scope.globalIsOn) {
+    if ($scope.globalIsOn) { // Close
       ShotVideoService.resumeLoop();
       angular.element(document.body).removeClass('noscroll');
-    } else {
+    } else { // Open
       ShotVideoService.pause();
+      AnalyticsService.buttonClick("Global Menu Opened");
       angular.element(document.body).addClass('noscroll');
     }
     $scope.globalIsOn = !$scope.globalIsOn;
@@ -259,6 +262,10 @@ function ShotCtrl($scope, $sce, $filter, $timeout, $state, $stateParams, ShotSer
 		  $scope.menuIsOn = false;
 		  angular.element(document.body).removeClass('noscroll');
 	  }
+  }
+  
+  $scope.analyticsButtonClick = function(button) {
+	  AnalyticsService.buttonClick(button);
   }
     
   // Share Link copy to clipboard

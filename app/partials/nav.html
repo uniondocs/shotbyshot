@@ -34,8 +34,8 @@
 					<h3 ng-bind-html="shot.annotations[0].author.name"></h3>
 					
 					<div class="nav-menu-utilities">
-						<a href="{{ shot.annotations[0].pdf }}" target="_blank">PDF Download</a>
-						<a href="javascript:void(0)" class="share-link">Share</a>
+						<a href="{{ shot.annotations[0].pdf }}" ng-click="analyticsButtonClick('PDF Download')" target="_blank">PDF Download</a>
+						<a href="javascript:void(0)" ng-click="analyticsButtonClick('Share')" class="share-link">Share</a>
 					</div>
 				</div>
 				<div class="nav-menu-description">
@@ -75,12 +75,12 @@
     </div>
 
     <div class="nav-global">
-      <div><a href="https://worldrecordsjournal.org" target="_blank">About</a></div>
-      <div><a href="https://worldrecordsjournal.org/volumes/" target="_blank">Volumes</a></div>
-      <div><a href="https://worldrecordsjournal.org/subscribe-to-world-records/" target="_blank">Subscribe</a></div>
-      <div><a href="https://worldrecordsjournal.org/join/" target="_blank">Newsletter Signup</a></div>
-      <div><a href="https://worldrecordsjournal.org/submissions/" target="_blank">Call for Submissions</a></div>
-      <div><a href="https://worldrecordsjournal.org/contact/" target="_blank">Contact</a></div>
+      <div><a href="https://worldrecordsjournal.org" ng-click="analyticsButtonClick('Global: About')" target="_blank">About</a></div>
+      <div><a href="https://worldrecordsjournal.org/volumes/" ng-click="analyticsButtonClick('Global: Volumes')" target="_blank">Volumes</a></div>
+      <div><a href="https://worldrecordsjournal.org/subscribe-to-world-records/" ng-click="analyticsButtonClick('Global: Subscribe')" target="_blank">Subscribe</a></div>
+      <div><a href="https://worldrecordsjournal.org/join/" ng-click="analyticsButtonClick('Global: Newsletter Signup')" target="_blank">Newsletter Signup</a></div>
+      <div><a href="https://worldrecordsjournal.org/submissions/" ng-click="analyticsButtonClick('Global: Call for Submissions')" target="_blank">Call for Submissions</a></div>
+      <div><a href="https://worldrecordsjournal.org/contact/" ng-click="analyticsButtonClick('Global: Contact')" target="_blank">Contact</a></div>
 
       <!--<div class="nav-global-subscribe">
         <form action="http://ymlp.com/subscribe.php?id=gumhejygmgb" method="post">

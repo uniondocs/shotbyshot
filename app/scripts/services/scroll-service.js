@@ -1,6 +1,6 @@
 'use strict';
 
-function ScrollService(ShotVideoService, $stateParams) {
+function ScrollService(ShotVideoService, AnalyticsService, $stateParams) {
   /**
    * key: distance from current slide of the keyframe, in units of slides.
    *     so -1 means this keyframe starts when the current slide is one full
@@ -105,6 +105,7 @@ function ScrollService(ShotVideoService, $stateParams) {
 
     //window.addEventListener('scroll', angular.bind(this, this.onscroll));
     window.addEventListener('resize', angular.bind(this, this.sizeAndPosition));
+    document.addEventListener('routeChange', this.resetScroll() );
 
     this.boundOnscroll = angular.bind(this, this.onscroll);
     this.nextDraw();
@@ -401,9 +402,10 @@ function ScrollService(ShotVideoService, $stateParams) {
     }, 100);
     
     // Wait for all images to load, then sizeAndPosition again to re-evaluate dynamic image sizing in columns
-    var imgs = document.images;
+    var imgs = document.getElementsByTagName('slide-manager')[0].getElementsByTagName('img');
     var len = imgs.length;
     var counter = 0;
+    var slidesLayout = new Event('slidesLayoutComplete');
 
 	[].forEach.call( imgs, function( img ) {
 	    img.addEventListener( 'load', incrementCounter, false );
@@ -411,8 +413,10 @@ function ScrollService(ShotVideoService, $stateParams) {
 	
 	function incrementCounter() {
 	    counter++;
-	    if ( counter === len ) {
+
+	    if ( counter === len) {
 	        self.sizeAndPosition();
+			document.dispatchEvent(slidesLayout);
 	    }
 	}
   };
@@ -421,7 +425,11 @@ function ScrollService(ShotVideoService, $stateParams) {
   this.scrollToSlide = function (slide) {
     window.scrollTo(0, slide.padded_top);
   };
-
+  
+  this.resetScroll = function () {
+	document.getElementsByTagName('slide-manager')[0].scrollTop = 0;
+  }
+  
 
   this.sizeAndPosition = function () {
 	var self = this;
@@ -653,12 +661,12 @@ function ScrollService(ShotVideoService, $stateParams) {
     window.cancelAnimationFrame(this.animationFrame);
     this.onscroll();
   };
-
+  
   this.onscroll = function () {
     var currentY = window.scrollY;
     var slideDistance;
     var currentSlideIndex;
-
+        
     if (!this.slides || !this.slides.length || currentY === this.lastY || currentY < 0) {
       return this.nextDraw();
     }
@@ -886,14 +894,13 @@ function ScrollService(ShotVideoService, $stateParams) {
             'opacity': css['playOpacity']
           });
         }
-
+        
       }, this);
     }, this);
 
     return this.nextDraw();
   }
 }
-
 
 angular
   .module('shotbyshot')
