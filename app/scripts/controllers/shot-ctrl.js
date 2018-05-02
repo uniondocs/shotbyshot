@@ -2,7 +2,7 @@
 
 function ShotCtrl($scope, $sce, $filter, $timeout, $state, $stateParams, ShotService,
                   AnnotationParserService, ShotVideoService, ScrollService,
-                  AnalyticsService, AutoScrollerService) {
+                  AnalyticsService, AutoScrollerService, MetaService) {
   var self = this;
 
   this.id = ShotService.current;
@@ -105,6 +105,8 @@ function ShotCtrl($scope, $sce, $filter, $timeout, $state, $stateParams, ShotSer
       var slides = intro.concat(AnnotationParserService.parse(annotations), outro);
       self.annotations = annotations;
       self.slides = slides;
+      
+      MetaService.generateMeta(annotations[0]);
       
       _.each(slides, function (slide) {
         slide.isNav = $scope.isNavSlide(slide);

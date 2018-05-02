@@ -42,7 +42,7 @@ function AnnotationParserService($sce, $rootScope, Annotation) {
        */
        
       var annotationContent = annotation.content;
-      	  
+            	  
 	  // Wrap footnotes so we can link them later
 	  var regex = /({\d+})/g;
 	  var subst = '<a class="footnote">$1</a>'; 
