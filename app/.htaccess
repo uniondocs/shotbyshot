@@ -670,9 +670,11 @@ FileETag None
 # recognize the route and read dynamical content. We'll need to redirect to the 
 # equivalent pages on the World Records site to serve meta tags
 
-AddDefaultCharset UTF-8
-RewriteEngine On
-RewriteBase /
-
-RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit/[0-9]|Twitterbot|Pinterest|Google.*snippet)
-RewriteRule ^([^/]*)$ https://worldrecordsjournal.org/ [NC,L]
+<IfModule mod_rewrite.c>
+	AddDefaultCharset UTF-8
+	RewriteEngine On
+	RewriteBase /
+	
+	RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit/[0-9]|Twitterbot|Pinterest|Google.*snippet)
+	RewriteRule ^([^/]*)$ https://worldrecordsjournal.org/ [NC,L]
+</IfModule>
