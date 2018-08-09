@@ -661,3 +661,20 @@ FileETag None
 #        SetOutputFilter INCLUDES
 #    </FilesMatch>
 # </IfModule>
+
+# ------------------------------------------------------------------------------
+# | Redirecting Social Bots                                                         |
+# ------------------------------------------------------------------------------
+
+# Since Facebook/Twitter Bots do not evaluate JS, they will not have any ability to
+# recognize the route and read dynamical content. We'll need to redirect to the 
+# equivalent pages on the World Records site to serve meta tags
+
+<IfModule mod_rewrite.c>
+	AddDefaultCharset UTF-8
+	RewriteEngine On
+	RewriteBase /
+	
+	RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit/[0-9]|Twitterbot|Pinterest|Google.*snippet)
+	RewriteRule ^post/(.*)$ https://worldrecordsjournal.org/ [NC,L]
+</IfModule>
