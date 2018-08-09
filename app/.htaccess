@@ -676,5 +676,5 @@ FileETag None
 	RewriteBase /
 	
 	RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit/[0-9]|Twitterbot|Pinterest|Google.*snippet)
-	RewriteRule ^post/(.*)$ https://worldrecordsjournal.org/ [NC,L]
+	RewriteRule ^([^/]*)$ https://worldrecordsjournal.org/ [NC,L]
 </IfModule>
