@@ -203,13 +203,7 @@ function ShotCtrl($scope, $sce, $filter, $timeout, $state, $stateParams, ShotSer
   };
 
   $scope.thumbnailForShot = function (shot) {
-	var $thumb = "";
-	if(shot.thumbnail_images && shot.thumbnail_images.medium_large) {
-		$thumb = shot.thumbnail_images.medium_large.url;
-	} else {
-		$thumb = '/wp/wp-content/uploads/Shots_400px/' + shot.slug + '.png';
-	}
-    return $thumb;
+    return '/wp/wp-content/uploads/Shots_400px/' + shot.slug + '.png';
   };
   
   $scope.annotationsForShot = function (shot) {
