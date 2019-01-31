@@ -4,7 +4,8 @@
   "dependencies": {
     "http-proxy": "^1.17.0",
     "proxy-middleware": "0.5.1",
-    "require-dir": "^0.3.2"
+    "require-dir": "^0.3.2",
+    "express": "^4.16.4"
   },
   "devDependencies": {
     "browser-sync": "^1.9.2",
