@@ -44,7 +44,7 @@
     "wiredep": "^1.4.3"
   },
   "engines": {
-    "node": "6.11.1"
+    "node": "11.4.0"
   },
   "scripts": {
     "start": "node app.js"
