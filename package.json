@@ -48,5 +48,20 @@
   },
   "scripts": {
     "start": "node app.js"
-  }
+  },
+  "description": "# Dependencies",
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uniondocs/shotbyshot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/uniondocs/shotbyshot/issues"
+  },
+  "homepage": "https://github.com/uniondocs/shotbyshot#readme"
 }
