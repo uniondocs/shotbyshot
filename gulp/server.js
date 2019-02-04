@@ -101,6 +101,10 @@ function expressProxyCacheSetup(directory) {
     app.use(express.static(appDirectory));
     var cssDirectory = __dirname.replace('gulp', '.tmp/styles');
     app.use('/styles', express.static(cssDirectory));
+    
+    app.use(function(req, res) {
+    	res.sendFile(appDirectory + '/index.html');
+  	});
   }
   app.listen(8080);
 }

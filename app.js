@@ -13,12 +13,20 @@ var directory = 'dist';
   var express = require('express');
   var httpProxy = require('http-proxy');
   var util = require('util');
+  var path = require('path');
 
   var app = express();
   var apiProxy = httpProxy.createProxyServer();
   
   // haha
   var cache = {};
+  
+  var RewriteMiddleware = require('express-htaccess-middleware');
+  var RewriteOptions = {
+	file: path.resolve(__dirname, '.htaccess'),
+	verbose: true,
+  };
+  app.use(RewriteMiddleware(RewriteOptions));
       
   app.get('/wp/*', function(req, res){
     req.url = req.url.replace('/wp', '');
@@ -70,5 +78,9 @@ var directory = 'dist';
     app.use(express.static(appDirectory));
     var cssDirectory = __dirname.replace('gulp', '.tmp/styles');
     app.use('/styles', express.static(cssDirectory));
+    
+    app.use(function(req, res) {
+    	res.sendFile(appDirectory + '/index.html');
+  	});
   }
   app.listen(port);
