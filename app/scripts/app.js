@@ -19,9 +19,10 @@ angular
         controller: 'ShotCtrl',
         controllerAs: 'shot'
       });
+    $locationProvider.html5Mode(true);
     $urlRouterProvider.otherwise('/01/01');
     
-     $sceDelegateProvider.resourceUrlWhitelist([
+    $sceDelegateProvider.resourceUrlWhitelist([
        // Allow same origin resource loads.
        'self',
        // Allow wordpress uploads.
