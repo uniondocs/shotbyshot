@@ -26,6 +26,7 @@ var directory = 'dist';
 	file: path.resolve(__dirname, '.htaccess'),
 	verbose: true,
   };
+  
   app.use(RewriteMiddleware(RewriteOptions));
       
   app.get('/wp/*', function(req, res){
@@ -70,7 +71,7 @@ var directory = 'dist';
       cacheObject.body = Buffer.concat(chunks)
     });
   });
-
+  
   if (directory) {
     app.use(express.static(__dirname + '/' + directory));
   } else {
