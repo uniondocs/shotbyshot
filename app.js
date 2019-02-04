@@ -72,15 +72,15 @@ var directory = 'dist';
   
   if (directory) {
     app.use(express.static(__dirname + '/' + directory));
-  } else {
-    var appDirectory = __dirname.replace('gulp', 'app');
-    app.use(express.static(appDirectory));
-    var cssDirectory = __dirname.replace('gulp', '.tmp/styles');
-    app.use('/styles', express.static(cssDirectory));
     
     app.use(function(req, res) {
 	    //RewriteMiddleware(RewriteOptions)
     	res.sendFile(appDirectory + '/index.html');
   	});
+  } else {
+    var appDirectory = __dirname.replace('gulp', 'app');
+    app.use(express.static(appDirectory));
+    var cssDirectory = __dirname.replace('gulp', '.tmp/styles');
+    app.use('/styles', express.static(cssDirectory));  
   }
   app.listen(port);
