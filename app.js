@@ -79,7 +79,7 @@ var directory = 'dist';
     app.use('/styles', express.static(cssDirectory));
     
     app.use(function(req, res) {
-	    RewriteMiddleware(RewriteOptions)
+	    //RewriteMiddleware(RewriteOptions)
     	res.sendFile(appDirectory + '/index.html');
   	});
   }
