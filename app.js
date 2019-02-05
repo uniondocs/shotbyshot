@@ -67,7 +67,14 @@ var directory = 'dist';
     app.use(express.static(__dirname + '/' + directory));
     
     app.use(function(req, res) {
-	    console.log('User-Agent: ' + req.headers['user-agent']);
+	    var agent = req.headers['user-agent'];
+	    var social = '(facebookexternalhit/[0-9]| Twitterbot|Pinterest|Google.*)';
+	    
+	    if(agent.match(social)) {
+		    var path = req.url;
+		    var wp_path = path.replace(/^\//, '').replace('/','-');
+		    res.redirect('https://worldrecordsjournal.org/annotations/' + wp_path);
+	    }
     	res.sendFile(__dirname + '/' + directory + '/index.html');
   	});
   } else {

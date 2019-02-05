@@ -103,7 +103,6 @@ function expressProxyCacheSetup(directory) {
     app.use('/styles', express.static(cssDirectory));
     
     app.use(function(req, res) {
-	   	console.log('User-Agent: ' + req.headers['user-agent']);
     	res.sendFile(appDirectory + '/index.html');
   	});
   }
