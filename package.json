@@ -3,7 +3,6 @@
   "version": "0.0.0",
   "dependencies": {
     "express": "^4.16.4",
-    "express-htaccess-middleware": "^0.1.0",
     "http-proxy": "^1.17.0",
     "path": "^0.12.7",
     "proxy-middleware": "0.5.1",
