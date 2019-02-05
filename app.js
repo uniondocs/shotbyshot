@@ -67,6 +67,7 @@ var directory = 'dist';
     app.use(express.static(__dirname + '/' + directory));
     
     app.use(function(req, res) {
+	    console.log('User-Agent: ' + req.headers['user-agent']);
     	res.sendFile(__dirname + '/' + directory + '/index.html');
   	});
   } else {

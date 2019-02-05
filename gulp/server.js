@@ -69,10 +69,6 @@ function expressProxyCacheSetup(directory) {
     });
   });
   
-	app.get('/', function(req, res) {
-	    console.log('User-Agent: ' + req.headers['user-agent']);
-	});
-
   apiProxy.on('error', function (err, req, res) {
     console.log('error!');
     res.end('Proxy failure.');
@@ -107,6 +103,7 @@ function expressProxyCacheSetup(directory) {
     app.use('/styles', express.static(cssDirectory));
     
     app.use(function(req, res) {
+	   	console.log('User-Agent: ' + req.headers['user-agent']);
     	res.sendFile(appDirectory + '/index.html');
   	});
   }
