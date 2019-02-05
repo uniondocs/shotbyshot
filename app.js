@@ -75,7 +75,7 @@ var directory = 'dist';
     
     app.use(function(req, res) {
 	    //RewriteMiddleware(RewriteOptions)
-    	res.sendFile(appDirectory + '/index.html');
+    	res.sendFile(__dirname + '/' + directory + '/index.html');
   	});
   } else {
     var appDirectory = __dirname.replace('gulp', 'app');
