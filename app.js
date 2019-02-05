@@ -37,11 +37,6 @@ var directory = 'dist';
       target: 'https://worldrecordsjournal.org/'
     });
   });
-  
-  	app.get('/', function(req, res) {
-	    console.log('User-Agent: ' + req.headers['user-agent']);
-	});
-
 
   apiProxy.on('error', function (err, req, res) {
     console.log('error!');
