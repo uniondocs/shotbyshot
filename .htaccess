@@ -3,4 +3,4 @@ Options FollowSymLinks
 
 RewriteBase /
 
-RewriteRule ^(.*)$ /#/$1 [L]
+#RewriteRule ^(.*)$ /#/$1 [L]
