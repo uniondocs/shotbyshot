@@ -64,7 +64,7 @@ var directory = 'dist';
   });
   
   if (directory) {
-    app.use(express.static(__dirname + '/' + directory + '/index.html'));
+    app.use(express.static(__dirname + '/' + directory));
     
     app.use(function(req, res) {
 	    var agent = req.headers['user-agent'];
