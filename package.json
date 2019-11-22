@@ -2,7 +2,7 @@
   "name": "shotbyshot",
   "version": "0.0.0",
   "dependencies": {
-	"express":"*",
+	"express":"^4.17.1",
 	"body-parser":"*",
     "gulp-clean-css": "^4.2.0",
     "http-proxy": "^1.18.0",
