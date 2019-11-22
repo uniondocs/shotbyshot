@@ -1,6 +1,7 @@
 'use strict';
 
 var gulp = require('gulp');
+var gulpif = require('gulp-if');
 
 var angularTemplates = require('gulp-angular-templates');
 
@@ -11,6 +12,7 @@ var $ = require('gulp-load-plugins')({
 gulp.task('styles', function () {
   return gulp.src('app/styles/*.scss')
     .pipe($.plumber())
+    .pipe($.sass())
     .pipe(gulp.dest('.tmp/styles'))
     .pipe($.size());
 });
@@ -64,19 +66,10 @@ gulp.task('html', ['styles', 'scripts', 'partials', 'templates'], function () {
       ignorePath: 'dist',
       addRootSlash: false
     }))
-    .pipe($.useref.assets())
-    .pipe($.rev())
-    .pipe(jsFilter)
-    .pipe($.ngAnnotate())
-    .pipe($.uglify({preserveComments: $.uglifySaveLicense}))
-    .pipe(jsFilter.restore())
-    .pipe(cssFilter)
-    .pipe($.replace('bower_components/bootstrap-sass-official/vendor/assets/fonts/bootstrap','fonts'))
-    .pipe($.csso())
-    .pipe(cssFilter.restore())
-    .pipe($.useref.restore())
     .pipe($.useref())
-    .pipe($.revReplace())
+    .pipe(gulpif('*.js', $.ngAnnotate()))
+    .pipe(gulpif('*.js', $.uglify())) //to uglify js files
+    .pipe(gulpif('*.css', $.csso())) //to uglify css files
     .pipe(gulp.dest('dist'))
     .pipe($.size());
 });

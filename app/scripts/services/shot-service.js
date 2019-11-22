@@ -63,6 +63,7 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
   this.cache = [];
 
   var urlBase = '/wp/?json=get_post&post_type=mm_annotation&slug=';
+  //var urlBase = 'https://worldrecordsjournal.org/wp-json/wp/v2/mm_annotation?slug=';
 
   /**
    * @param {number=} opt_id optional id of shot to fetch. Defaults to current.
@@ -87,6 +88,7 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
         url: url
       }).success(function(data) {
         self.cache[id] = AnnotationsService.parse(data.post);
+        console.log(data);
         deferred.resolve(self.cache[id]);
       }).error(function() {
         deferred.reject('Error fetching shot ' + id);

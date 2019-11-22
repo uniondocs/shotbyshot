@@ -46,9 +46,7 @@ function ShotCtrl($scope, $sce, $filter, $timeout, $state, $stateParams, ShotSer
 
   var outroShouldMoveOn = true;
 
-  if (this.id) {
-	console.log("this ID: " + this.id);
-	
+  if (this.id) {	
     ShotService.getShot(this.id).then(function(annotations) {
       if (window.location.search.indexOf('installation') >= 0) {
         // If in installation mode and video has not been played after some time,
@@ -59,12 +57,12 @@ function ShotCtrl($scope, $sce, $filter, $timeout, $state, $stateParams, ShotSer
           }
         }, AUTO_ACTION_DURATION);
       }
-            
+                  
       var intro = [{
         type: 'introduction',
         shot: self.id,
         title: annotations[0].title,
-        //authors: annotations[0].author.name,
+        authors: annotations[0].author.name,
         nav: 'introduction',
         attributes: {
 	        loop:annotations[0].timecodes
