@@ -40,13 +40,14 @@ function AnnotationParserService($sce, $rootScope, Annotation) {
        * HTML tags and parse the containing string as a DOM element and
        * then use the native DOM getAttribute methods.
        */
-       
-      var annotationContent = annotation.content;
-            	  
+    
+      annotation.content = annotation.content;
+      annotation.title = annotation.title;
+                                                      	  
 	  // Wrap footnotes so we can link them later
 	  var regex = /({\d+})/g;
 	  var subst = '<a class="footnote">$1</a>'; 
-	  annotationContent = annotationContent.replace(regex, subst);
+	  var annotationContent = annotation.content.replace(regex, subst);
 	        
       // Separate each [slide or [Slide tag.
       var slides = annotationContent.split(/\[slide\s*/ig);
@@ -196,7 +197,7 @@ function AnnotationParserService($sce, $rootScope, Annotation) {
             $rootScope.$broadcast('videoExit', slideObject);
           };
         }
-
+        
         slideObjects.push(slideObject);
       });
     });

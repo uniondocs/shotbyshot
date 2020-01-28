@@ -145,19 +145,20 @@ function ShotCtrl($scope, $sce, $filter, $timeout, $state, $stateParams, ShotSer
   
   ShotService.getVolumes().then(function(volumes) {
     $scope.volumes = volumes;
-    
+        
     _.each(volumes, function(volume) {
 		if(volume.slug === $stateParams.volume) {
 			$scope.currentVolume = self.currentVolume = volume;
+			
+			getShotsForVolume(self.currentVolume.id);
 		}  
     });
   });
-  
-    
-  ShotService.getVolumeShots().then(function(shots) {
-    $scope.shots = shots;
-  });
-  
+  function getShotsForVolume(volume_id) {  
+      ShotService.getVolumeShots(volume_id).then(function(shots) {
+        $scope.shots = shots;
+      });
+  }
 
   ShotService.getTags(0).then(function(tags) {
     self.tags = _.map(_.sortBy(tags, function (tag) {
@@ -203,7 +204,7 @@ function ShotCtrl($scope, $sce, $filter, $timeout, $state, $stateParams, ShotSer
   };
 
   $scope.thumbnailForShot = function (shot) {
-    return '/wp/wp-content/uploads/Shots_400px/' + shot.slug + '.png';
+    return 'https://worldrecordsjournal.org/wp-content/uploads/Shots_400px/' + shot.slug + '.png';
   };
   
   $scope.annotationsForShot = function (shot) {

@@ -1,22 +1,32 @@
 'use strict';
 
-function Annotation() {
+function Annotation() {  
   function annotation(data) {
+    
     if (!data) {
       return;
     }
         
-	this.slug = data.categories[0].slug;
-	    
-    // Store the title & content
-    this.title = data.title;
-    this.content = data.content || '';
-        
+    /*if(data.categories) {
+    	this.slug = data.categories[0].slug;
+    }*/
+    this.slug = data.slug;
+    
+    // Store the title & content 
+    this.title = data.title.rendered;
+    this.content = data.content.rendered || '';
+    
+    var indexes = data.slug.split("-");
+    if(indexes.length > 1) {
+        this.volume = indexes[0];
+        this.index = indexes[1];
+    }
+                                    
     // Get the Authors & Description
 	if(data.custom_fields.authors) {
 		this.author = {
-	      name: data.custom_fields.authors[0],
-	      description: data.custom_fields.description[0],
+	      name: data.custom_fields.authors,
+	      description: data.custom_fields.description,
 	      image: '/wp/wp-content/uploads/authors/' + data.author.nickname + '.jpg'
 	    };
 	} else {
@@ -26,24 +36,22 @@ function Annotation() {
 	      image: '/wp/wp-content/uploads/authors/' + data.author.nickname + '.jpg'
 	    };
 	}
-	
+		
 	if(data.custom_fields.pdf_download) {
-		this.pdf = data.custom_fields.pdf_download[0]
+		this.pdf = data.custom_fields.pdf_download;
 	}
 		
     // Parse custom fields (street view, timecodes, and highlight).
-    var customFields = data.custom_fields;
-
     function getCustomField(key) {
-      var value = customFields && customFields[key] && customFields[key][0];
+      var value = data.custom_fields && data.custom_fields[key] && data.custom_fields[key][0];
       return value || '';
     }
-
-    var streetView = getCustomField('mm_annotation_streetview');
-    var start = getCustomField('mm_annotation_start_timecode');
-    var end = getCustomField('mm_annotation_end_timecode');
-    var x = getCustomField('mm_annotation_x');
-    var y = getCustomField('mm_annotation_y');
+    
+    var streetView = data.custom_fields['mm_annotation_streetview'];
+    var start = data.custom_fields['mm_annotation_start_timecode'];
+    var end = data.custom_fields['mm_annotation_end_timecode'];
+    var x = data.custom_fields['mm_annotation_x'];
+    var y = data.custom_fields['mm_annotation_y'];
 
     if (streetView) {
       this.streetView = streetView;

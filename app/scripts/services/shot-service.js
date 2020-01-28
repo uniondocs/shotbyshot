@@ -62,15 +62,15 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
    */
   this.cache = [];
 
-  var urlBase = '/wp/?json=get_post&post_type=mm_annotation&slug=';
-  //var urlBase = 'https://worldrecordsjournal.org/wp-json/wp/v2/mm_annotation?slug=';
-
   /**
    * @param {number=} opt_id optional id of shot to fetch. Defaults to current.
    * @return {Promise} promise object that will be resolved with the shot
    *     data, either from cache or from server.
    */
-  this.getShot = function(opt_id) {  
+  this.getShot = function(opt_id) { 
+    //var urlBase = '/wp/?json=get_post&post_type=mm_annotation&slug=';
+    var urlBase = 'https://worldrecordsjournal.org/wp-json/wp/v2/mm_annotation?slug=';
+ 
     var deferred = $q.defer();
     var id = (typeof opt_id === 'number' && !isNaN(opt_id)) ? opt_id :
         this.current;
@@ -81,14 +81,13 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
       deferred.resolve(this.cache[id]);
       return deferred.promise;
     }
-    
+                
     var url = urlBase + id;
     $http({
         method: 'GET',
         url: url
       }).success(function(data) {
-        self.cache[id] = AnnotationsService.parse(data.post);
-        console.log(data);
+        self.cache[id] = AnnotationsService.parse(data[0]);
         deferred.resolve(self.cache[id]);
       }).error(function() {
         deferred.reject('Error fetching shot ' + id);
@@ -102,15 +101,17 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
   this.getVolumes = function() {
     var deferred = $q.defer();
     var self = this;
-
+    
+    var url = 'https://worldrecordsjournal.org/wp-json/wp/v2/categories?per_page=100';
+    
     $http({
       method: 'GET',
-      url: '/wp/?json=get_category_index'
+      url: url
     }).success(function(data) {
-      if (data.status === 'ok') {
+      if (data) {
         var volumes = [];
 
-        data.categories.forEach(function(category) {
+        data.forEach(function(category) {
           // TODO(dbow): Remove this filter when only volume categories are
           // present in the API.
           if (category.slug.length === 2) {
@@ -121,7 +122,7 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
 	        }	        
             volumes.push(category);
             // Store post count by volume to update the max shot value.
-            articleCountByVolume[parseInt(category.slug, 10)] = category.post_count;
+            articleCountByVolume[parseInt(category.slug, 10)] = category.count;  
           }
         });
 
@@ -140,27 +141,26 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
   
   
   // Get Shots (Posts) in Volume
-  this.getVolumeShots = function() {
+  this.getVolumeShots = function(volume_id) {
     var deferred = $q.defer();
     var self = this;
     
+    //var url = '/wp/?json=get_category_posts&count=-1&status=publish&category_slug='+$stateParams.volume;
+    var url = 'https://worldrecordsjournal.org/wp-json/wp/v2/mm_annotation?categories='+volume_id+'&per_page=100';
+    
     $http({
       method: 'GET',
-      url: '/wp/?json=get_category_posts&count=-1&status=publish&category_slug='+$stateParams.volume
+      url: url
     }).success(function(data) {
-      if (data.status === 'ok') {
-	      	      
-	    data.posts.forEach(function(post) {
-		   var indexes = post.slug.split("-");
-		   
-		   if(indexes.length > 1) {
-			   post.volume = indexes[0];
-			   post.index = indexes[1];
-			   post.annotations = AnnotationsService.parse(post);
-		   }
+      if (data) {   
+        var shots = [];
+         
+	    data.forEach(function(shot) {
+            shot.annotations = AnnotationsService.parse(shot);
+            shots.push(shot.annotations[0]);
         });
         
-        deferred.resolve(data.posts);
+        deferred.resolve(shots);
       } else {
         deferred.reject('Error fetching volumes');
       }
@@ -170,9 +170,8 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
 
     return deferred.promise;
   }
-  
 
-  // Get thumbnails
+  // Get thumbnails (unused)
   var thumbnailUrl = '/wp/?json=get_category_index';
   this.getThumbnails = function(page) {
     var deferred = $q.defer();
@@ -194,7 +193,8 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
 
     return deferred.promise;
   };
-
+  
+  // Get Posts for Tag URL (unused)
   var postsForTagUrl = '/wp/?json=get_tag_posts';
   this.getAnnotationsForTag = function(tag, page) {
     var deferred = $q.defer();
@@ -217,6 +217,7 @@ function ShotService($rootScope, $http, $filter, $stateParams, $q,
     return deferred.promise;
   };
 
+  // Get Tags (unused)
   var tagUrl = '/wp/?json=get_tag_index';
   this.getTags = function(page) {
     var deferred = $q.defer();
